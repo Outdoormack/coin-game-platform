@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ClaimResponse } from '@/lib/types';
 import ScoreReveal from './ScoreReveal';
+import { supabase } from '@/lib/supabase';
 
 interface Props {
   coinExternalId: string;
@@ -13,16 +14,59 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
   const [name, setName] = useState('');
   const [mode, setMode] = useState<'earned' | 'stolen' | null>(null);
   const [storyText, setStoryText] = useState('');
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [showExtras, setShowExtras] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<ClaimResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Remember player name
   useEffect(() => {
     const saved = localStorage.getItem('playerName');
     if (saved) setName(saved);
   }, []);
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // 10MB limit
+    if (file.size > 10 * 1024 * 1024) {
+      setError('Photo must be under 10MB');
+      return;
+    }
+
+    setPhotoFile(file);
+    setError(null);
+
+    // Show preview
+    const reader = new FileReader();
+    reader.onloadend = () => setPhotoPreview(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  const removePhoto = () => {
+    setPhotoFile(null);
+    setPhotoPreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const uploadPhoto = async (file: File): Promise<string> => {
+    const ext = file.name.split('.').pop() || 'jpg';
+    const path = `${coinExternalId}/${Date.now()}.${ext}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('coin-photos')
+      .upload(path, file, { contentType: file.type, upsert: false });
+
+    if (uploadError) throw new Error(uploadError.message);
+
+    const { data } = supabase.storage.from('coin-photos').getPublicUrl(path);
+    return data.publicUrl;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,6 +79,21 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
     localStorage.setItem('playerName', name.trim());
 
     try {
+      // Upload photo first if selected
+      let photoUrl: string | undefined;
+      if (photoFile) {
+        setUploading(true);
+        try {
+          photoUrl = await uploadPhoto(photoFile);
+        } catch (uploadErr) {
+          setError('Photo upload failed — try again or remove the photo');
+          setSubmitting(false);
+          setUploading(false);
+          return;
+        }
+        setUploading(false);
+      }
+
       const res = await fetch('/api/claim', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -43,6 +102,7 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
           playerName: name.trim(),
           mode,
           storyText: storyText.trim() || undefined,
+          photoUrl,
         }),
       });
 
@@ -59,6 +119,7 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
       setError('Network error. Try again.');
     } finally {
       setSubmitting(false);
+      setUploading(false);
     }
   };
 
@@ -82,6 +143,12 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
       </div>
     );
   }
+
+  const buttonLabel = () => {
+    if (uploading) return 'Uploading photo...';
+    if (submitting) return 'Claiming...';
+    return '🪙 Claim this coin';
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
@@ -139,7 +206,8 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
       </button>
 
       {showExtras && (
-        <div className="space-y-2">
+        <div className="space-y-3">
+          {/* Story */}
           <div>
             <label htmlFor="story" className="block text-xs font-bold text-[#1e3b2a] mb-1">
               Your story <span className="font-normal text-gray-500">(+0.2 pts)</span>
@@ -153,8 +221,48 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
               className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#2f6f4f]"
             />
           </div>
-          {/* TODO: Photo upload */}
-          <p className="text-xs text-gray-400">📸 Photo upload coming soon (+0.2 pts)</p>
+
+          {/* Photo upload */}
+          <div>
+            <label className="block text-xs font-bold text-[#1e3b2a] mb-1">
+              Photo <span className="font-normal text-gray-500">(+0.2 pts)</span>
+            </label>
+
+            {!photoPreview ? (
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="w-full py-3 rounded-lg border-2 border-dashed border-gray-300 text-sm text-gray-500 hover:border-[#2f6f4f] hover:text-[#2f6f4f] transition-colors"
+              >
+                📸 Tap to add a photo
+              </button>
+            ) : (
+              <div className="relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={photoPreview}
+                  alt="Preview"
+                  className="w-full rounded-lg object-cover max-h-48 border border-gray-200"
+                />
+                <button
+                  type="button"
+                  onClick={removePhoto}
+                  className="absolute top-2 right-2 bg-black/60 text-white rounded-full w-7 h-7 flex items-center justify-center text-xs font-bold hover:bg-black/80"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handlePhotoChange}
+              className="hidden"
+            />
+          </div>
         </div>
       )}
 
@@ -168,10 +276,10 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
       {/* Submit */}
       <button
         type="submit"
-        disabled={submitting || !mode}
+        disabled={submitting || uploading || !mode}
         className="w-full py-3 rounded-xl bg-[#1e3b2a] text-[#f7f3e6] font-extrabold text-base hover:bg-[#254b37] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {submitting ? 'Claiming...' : '🪙 Claim this coin'}
+        {buttonLabel()}
       </button>
     </form>
   );
