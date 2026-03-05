@@ -258,7 +258,6 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
               ref={fileInputRef}
               type="file"
               accept="image/*"
-              capture="environment"
               onChange={handlePhotoChange}
               className="hidden"
             />

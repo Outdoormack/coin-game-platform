@@ -70,6 +70,16 @@ export default function RecentClaims() {
                     &ldquo;{claim.story_text}&rdquo;
                   </p>
                 )}
+                {claim.photo_url && (
+                  <a
+                    href={claim.photo_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[10px] text-[#2f6f4f] font-bold mt-0.5 hover:underline"
+                  >
+                    📸 View photo
+                  </a>
+                )}
               </div>
               <div className="text-right shrink-0">
                 <span className="text-xs font-bold text-[#2f6f4f]">
