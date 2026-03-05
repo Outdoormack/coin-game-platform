@@ -162,7 +162,7 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
           onChange={e => setName(e.target.value)}
           placeholder="Enter your name"
           autoComplete="name"
-          className="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-[#2f6f4f] focus:border-transparent"
+          className="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2f6f4f] focus:border-transparent"
           required
         />
       </div>
@@ -218,7 +218,7 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
               onChange={e => setStoryText(e.target.value)}
               placeholder="How'd this go down?"
               rows={2}
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#2f6f4f]"
+              className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-[#2f6f4f]"
             />
           </div>
 
