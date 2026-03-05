@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import PhotoLightbox from './PhotoLightbox';
 
 interface RecentClaim {
   id: string;
@@ -19,6 +20,7 @@ interface RecentClaim {
 export default function RecentClaims() {
   const [claims, setClaims] = useState<RecentClaim[]>([]);
   const [loading, setLoading] = useState(true);
+  const [lightboxUrl, setLightboxUrl] = useState<string | null>(null);
 
   const loadRecent = async () => {
     try {
@@ -47,6 +49,8 @@ export default function RecentClaims() {
   }
 
   return (
+    <>
+    {lightboxUrl && <PhotoLightbox url={lightboxUrl} onClose={() => setLightboxUrl(null)} />}
     <div className="max-h-64 overflow-y-auto space-y-0 divide-y divide-[#c9c2ae]/50">
       {claims.map(claim => {
         const verb = claim.mode === 'stolen' ? 'stole' : 'claimed';
@@ -71,14 +75,13 @@ export default function RecentClaims() {
                   </p>
                 )}
                 {claim.photo_url && (
-                  <a
-                    href={claim.photo_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => setLightboxUrl(claim.photo_url!)}
                     className="inline-flex items-center gap-1 text-[10px] text-[#2f6f4f] font-bold mt-0.5 hover:underline"
                   >
                     📸 View photo
-                  </a>
+                  </button>
                 )}
               </div>
               <div className="text-right shrink-0">
@@ -92,6 +95,7 @@ export default function RecentClaims() {
         );
       })}
     </div>
+    </>
   );
 }
 
