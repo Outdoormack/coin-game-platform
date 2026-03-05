@@ -3,6 +3,7 @@ import { Coin } from '@/lib/types';
 import ClaimForm from '@/components/ClaimForm';
 import Leaderboard from '@/components/Leaderboard';
 import RecentClaims from '@/components/RecentClaims';
+import BadgeRow from '@/components/BadgeRow';
 
 const RARITY_DISPLAY: Record<string, { label: string; stars: string; color: string }> = {
   common: { label: 'Common', stars: '', color: 'text-gray-500' },
@@ -90,24 +91,12 @@ export default async function CoinPage({ params }: PageProps) {
               <h2 className="text-lg font-extrabold text-[#1e3b2a]">{typedCoin.heading}</h2>
             )}
 
-            {/* Rarity + Effect badges */}
-            <div className="flex items-center justify-center gap-2 flex-wrap">
-              {typedCoin.rarity !== 'common' && (
-                <span className={`text-xs font-bold px-2 py-1 rounded-full border ${rarity.color} bg-white/50`}>
-                  {rarity.stars} {rarity.label}
-                </span>
-              )}
-              {effect.icon && (
-                <span className="text-xs font-bold px-2 py-1 rounded-full border border-[#c9c2ae] bg-white/50">
-                  {effect.icon} {effect.label}
-                </span>
-              )}
-              {status.icon && (
-                <span className={`text-xs font-bold px-2 py-1 rounded-full border ${status.color}`}>
-                  {status.icon} {status.label}
-                </span>
-              )}
-            </div>
+            {/* Rarity + Effect + Status badges — tappable with info popups */}
+            <BadgeRow
+              rarity={typedCoin.rarity}
+              effect={typedCoin.current_effect || 'standard'}
+              status={typedCoin.status}
+            />
 
             {/* Current holder */}
             {typedCoin.current_holder && (
