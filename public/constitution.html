@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Constitution of the Third Space Treasury</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5efe4;
+      color: #1a1a1a;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 14pt;
+      line-height: 1.6;
+    }
+
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 60px 64px;
+      background: #f5efe4;
+    }
+
+    /* ── COVER HEADER ── */
+    .cover-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid #1a1a1a;
+    }
+
+    .cover-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 42pt;
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-badge {
+      width: 100px;
+      height: 100px;
+      border: 2.5px solid #1a1a1a;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-left: 24px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .logo-badge .badge-text {
+      font-family: 'EB Garamond', serif;
+      font-size: 7pt;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    .logo-badge .badge-icon {
+      font-size: 24pt;
+      margin: 4px 0;
+    }
+
+    .logo-badge .badge-sub {
+      font-family: 'EB Garamond', serif;
+      font-size: 6.5pt;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      font-family: 'EB Garamond', serif;
+      font-size: 14pt;
+      font-style: italic;
+      font-weight: 600;
+      margin-bottom: 36px;
+      letter-spacing: 0.3px;
+    }
+
+    /* ── ARTICLE HEADING ── */
+    .article-heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 26pt;
+      font-weight: 400;
+      margin: 36px 0 0 0;
+      padding-bottom: 6px;
+    }
+
+    /* ── SECTION TABLE ── */
+    .section-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 4px;
+    }
+
+    .section-table tr {
+      border-top: 1px solid #b8ae9c;
+      border-bottom: 1px solid #b8ae9c;
+    }
+
+    .section-table tr:not(:first-child) {
+      border-top: none;
+    }
+
+    .section-table td {
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+
+    .section-label {
+      font-style: italic;
+      font-size: 12pt;
+      color: #333;
+      white-space: nowrap;
+      width: 180px;
+      min-width: 160px;
+    }
+
+    .section-content {
+      font-size: 12.5pt;
+      line-height: 1.65;
+    }
+
+    /* ── EFFECTS / RARITY TABLES ── */
+    .inner-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0;
+      font-size: 11.5pt;
+    }
+
+    .inner-table th {
+      text-align: left;
+      font-style: italic;
+      font-weight: 600;
+      border-bottom: 1px solid #b8ae9c;
+      padding: 4px 8px 4px 0;
+    }
+
+    .inner-table td {
+      padding: 4px 8px 4px 0;
+      vertical-align: top;
+      border-top: 1px solid #d9d2c5;
+    }
+
+    .inner-table td:first-child {
+      white-space: nowrap;
+      width: 180px;
+    }
+
+    /* ── APPENDIX ENTRIES ── */
+    .appendix-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 20pt;
+      font-weight: 700;
+      text-align: center;
+      margin: 48px 0 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .appendix-subtitle {
+      font-style: italic;
+      text-align: center;
+      font-size: 12pt;
+      color: #555;
+      margin-bottom: 32px;
+    }
+
+    .entry-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 16pt;
+      font-weight: 700;
+      margin: 28px 0 4px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #b8ae9c;
+    }
+
+    .entry-desc {
+      font-style: italic;
+      color: #444;
+      font-size: 12pt;
+      margin: 6px 0 12px;
+    }
+
+    .entry-body { font-size: 12.5pt; line-height: 1.7; }
+    .entry-body p { margin-bottom: 8px; }
+    .entry-body strong { font-weight: 600; }
+
+    /* ── RATIFICATION FOOTER ── */
+    .ratification {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 2px solid #1a1a1a;
+      font-family: 'Playfair Display', serif;
+      font-size: 12pt;
+      font-style: italic;
+      line-height: 1.9;
+      color: #333;
+    }
+
+    .platform-url {
+      font-family: 'EB Garamond', serif;
+      font-style: normal;
+      font-size: 10pt;
+      letter-spacing: 1px;
+      color: #666;
+      margin-top: 8px;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #f5efe4; }
+      .page { padding: 40px 48px; }
+      .article-heading { page-break-after: avoid; }
+      .section-table { page-break-inside: auto; }
+      .section-table tr { page-break-inside: avoid; }
+      .entry-title { page-break-after: avoid; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- COVER HEADER -->
+  <div class="cover-header">
+    <div class="cover-title">
+      The Constitution<br>of the<br>Third Space Treasury
+    </div>
+    <div class="logo-badge">
+      <div class="badge-text">THIRD SPACE<br>TREASURY</div>
+      <div class="badge-icon">🏆</div>
+      <div class="badge-sub">EST. 2025</div>
+    </div>
+  </div>
+
+  <div class="tagline">In Chaos We Compete. In Coin We Trust.</div>
+
+  <!-- ARTICLE I -->
+  <div class="article-heading">Article I — The Purpose</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — Why</td>
+      <td class="section-content">To foster friendly competition, unhinged wagers, and occasional brilliance through the use of a limited physical currency: the Coin of Competitive Chaos.<br><br>Each coin now carries an NFC tag. Scanning a coin opens the Treasury platform, where claims are recorded, points are awarded, and the leaderboard is updated in real time. The chaos is now digitized. It is no less chaotic.</td>
+    </tr>
+  </table>
+
+  <!-- ARTICLE II -->
+  <div class="article-heading">Article II — The Coins</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — Supply</td>
+      <td class="section-content">The Treasury maintains a fixed supply of NFC coins. These coins are not minted on demand. They are scarce by design. Treasure them. Steal them. Lose them. Find them again.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section B — Rarity</td>
+      <td class="section-content">Each coin carries a hidden rarity tier, revealed only upon first scan. Not all coins are equal. The Treasury does not apologize for this.
+        <table class="inner-table">
+          <tr><th>Rarity</th><th>Points</th><th>Notes</th></tr>
+          <tr><td>Common</td><td>1 pt</td><td>Most coins</td></tr>
+          <tr><td>⭐ Uncommon</td><td>2 pts</td><td>Some coins</td></tr>
+          <tr><td>⭐⭐ Rare</td><td>3 pts</td><td>Few coins</td></tr>
+          <tr><td>⭐⭐⭐ Legendary</td><td>5 pts</td><td>Very few coins</td></tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td class="section-label">Section C — Ownership</td>
+      <td class="section-content">Coins are not property. They are instruments of momentary glory and inevitable loss. The leaderboard remembers. The Treasury does not forgive.</td>
+    </tr>
+  </table>
+
+  <!-- ARTICLE III -->
+  <div class="article-heading">Article III — Lawful Use of Coins</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — How Coins Change Hands</td>
+      <td class="section-content">When you scan a coin, you declare one of two modes:<br><br>
+        ✅ <strong>Earned</strong> — Won through a bet, wager, trade, or act of goodwill.<br>
+        🗡️ <strong>Stolen</strong> — Scanned off someone's keychain, bag, or person with playful intent.<br><br>
+        Both are legal. Both are encouraged. The Treasury does not mediate physical altercations resulting from either.
+      </td>
+    </tr>
+    <tr>
+      <td class="section-label">Section B — Bets</td>
+      <td class="section-content">Any competition, prediction, or declaration of chaos may serve as grounds for a bet. Specific mechanics are in the Appendix of Competitive Chaos.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section C — Trades</td>
+      <td class="section-content">Coins may be bartered for dares, favors, snacks, or social gambits.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section D — Gifts</td>
+      <td class="section-content">Coins may be gifted to those in need, or to those from whom you will need something later.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section E — Events</td>
+      <td class="section-content">The group may invent contests with coin-based stakes: pickleball, game nights, or any activity in which someone is willing to look foolish for a coin.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section F — Monetary Value</td>
+      <td class="section-content">Coins may not be used to purchase real-world goods or favors exceeding $1 in value. "I'll buy you a drink for one coin" is forbidden. "I'll steal a french fry for a coin" is hilarious and allowed.</td>
+    </tr>
+  </table>
+
+  <!-- ARTICLE IV -->
+  <div class="article-heading">Article IV — The Hoarder</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — The Hoarder Rule</td>
+      <td class="section-content">Should a player physically carry more than 5 coins, they must make a charitable donation to the cause of chaos. Donate one coin to the player present with the fewest. If two or more are tied for the fewest, those players face off in a duel of their choosing. If they cannot agree, the duel defaults to rock-paper-scissors.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section B — The Platform Rule</td>
+      <td class="section-content">The Treasury platform tracks current holdings. Everyone can see who is hoarding. The leaderboard paints a target. The Treasury does not intervene beyond this.</td>
+    </tr>
+  </table>
+
+  <!-- ARTICLE V -->
+  <div class="article-heading">Article V — Redemption by Chaos</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — Redemption</td>
+      <td class="section-content">A player who has zero coins may:<br><br>
+        Stir the economy by encouraging others to bet and invoke Article IV — The Hoarder Rule. Chaos helps everyone.<br><br>
+        Beg or barter a coin from another player.<br><br>
+        Challenge any player with more than 3 coins to one game of rock-paper-scissors to win back a coin. This may only be attempted once per player, per event.
+      </td>
+    </tr>
+  </table>
+
+  <!-- ARTICLE VI -->
+  <div class="article-heading">Article VI — The Digital Layer</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — The Claim</td>
+      <td class="section-content">To claim a coin, scan its NFC tag. The Treasury platform will open. Enter your name, declare Earned or Stolen, and submit. Points are awarded immediately. The leaderboard updates in real time.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section B — No Double-Dipping</td>
+      <td class="section-content">You may not claim the same coin twice in a row. Another player must claim it in between. The Treasury has seen this attempted. The Treasury was not impressed.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section C — Story &amp; Photo</td>
+      <td class="section-content">When submitting a claim, you may add a written account of how it happened (+0.2 pts) and a photo (+0.2 pts). The Treasury rewards those who document their chaos.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section D — Coin Effects</td>
+      <td class="section-content">Each coin carries a hidden effect that triggers when claimed. Tap the badge on the claim page to learn what it does.
+        <table class="inner-table">
+          <tr><th>Effect</th><th>What Happens</th></tr>
+          <tr><td>— Standard</td><td>Base rarity points only.</td></tr>
+          <tr><td>🗡️ Thief</td><td>Steal 1 point from the previous holder.</td></tr>
+          <tr><td>🛡️ Shield</td><td>Coin cannot be claimed by anyone else for 48 hours.</td></tr>
+          <tr><td>🎲 Wildcard</td><td>Random roll: 1–6 points.</td></tr>
+          <tr><td>💀 Cursed</td><td>Worth 0 to you. Worth 3× base to the next person. Pass it fast.</td></tr>
+          <tr><td>🔗 Chain</td><td>+1 point per unique player who has held it this season.</td></tr>
+          <tr><td>🧲 Magnet</td><td>Your next claim within 24 hours is worth double.</td></tr>
+          <tr><td>🎯 Bounty Hunter</td><td>+3 bonus if the previous holder is in the top 3.</td></tr>
+          <tr><td>🪞 Mirror</td><td>Copies the rarity of your last claimed coin.</td></tr>
+          <tr><td>🔧 Rust Restorer</td><td>Decays while unclaimed. Claiming it restores full value plus a +1 bonus.</td></tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td class="section-label">Section E — Coin Statuses</td>
+      <td class="section-content">Coins may enter special states, visible on the claim page.<br><br>
+        🔥 <strong>Hot</strong> — Points doubled. Temporary. Move fast.<br>
+        ❄️ <strong>Frozen</strong> — Cannot be claimed. A Shield was triggered.<br>
+        🟤 <strong>Rusted</strong> — Sat unclaimed too long. Worth less. Worth claiming.<br>
+        🎯 <strong>Bounty</strong> — The leader holds it. Extra points for stealing it.
+      </td>
+    </tr>
+    <tr>
+      <td class="section-label">Section F — Physical Possession</td>
+      <td class="section-content">You should physically have the coin when you scan it. This is an honor system. If it feels like cheating, it probably is. The Treasury trusts its agents. Mostly.</td>
+    </tr>
+  </table>
+
+  <!-- ARTICLE VII -->
+  <div class="article-heading">Article VII — Points &amp; Standing</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — Scoring</td>
+      <td class="section-content">Points are calculated automatically on each claim:<br><br>
+        <em>Total = Base Rarity + Effect Modifier + Situation Bonuses + Story/Photo Bonus × Streak Multiplier</em>
+      </td>
+    </tr>
+    <tr>
+      <td class="section-label">Section B — Situation Bonuses</td>
+      <td class="section-content">These trigger automatically based on what is happening in the game at the time of your claim.
+        <table class="inner-table">
+          <tr><th>Bonus</th><th>Condition</th><th>Value</th></tr>
+          <tr><td>Kingslayer</td><td>Steal from the #1 player</td><td>+2 pts</td></tr>
+          <tr><td>Revenge</td><td>Reclaim a coin stolen from you within 72 hours</td><td>+2 pts</td></tr>
+          <tr><td>Underdog</td><td>Bottom 25% of active players</td><td>×1.5</td></tr>
+          <tr><td>First Discovery</td><td>First time you've scanned this specific coin</td><td>+1 pt</td></tr>
+          <tr><td>Fresh Blood</td><td>Your very first claim in the game</td><td>+3 pts</td></tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td class="section-label">Section C — The Leaderboard</td>
+      <td class="section-content">The leaderboard is always live. Season Score resets each season. Lifetime Score never resets. Both are visible. Neither is comfortable.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section D — Rivalries</td>
+      <td class="section-content">When two players steal from each other enough times, the platform declares them rivals. Claims between rivals carry a bonus point. Choose your enemies wisely.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section E — Bounties</td>
+      <td class="section-content">When the #1 player pulls too far ahead, the Treasury places a bounty on their coins. Anyone who steals one earns bonus points. The Treasury does not root for dynasties.</td>
+    </tr>
+  </table>
+
+  <!-- ARTICLE VIII -->
+  <div class="article-heading">Article VIII — Player Progression</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — Titles</td>
+      <td class="section-content">Your title displays next to your name and advances automatically as you earn XP.<br><br>
+        <em>Rookie → Scout → Agent → Operative → Shadow → Mastermind → Legend → Mythic</em>
+      </td>
+    </tr>
+    <tr>
+      <td class="section-label">Section B — Streaks</td>
+      <td class="section-content">Make at least one claim per week to maintain your streak. Active streaks earn a score multiplier on all claims. Miss a week and the streak resets. This is a social game. Life happens.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section C — Badges</td>
+      <td class="section-content">Badges are permanent achievements. Once earned, yours forever. Among them: First Tap, Kingslayer, Cat Burglar, Master Thief, Explorer, Centurion, Storyteller, Photographer, and Season Champion.</td>
+    </tr>
+  </table>
+
+  <!-- ARTICLE IX -->
+  <div class="article-heading">Article IX — Seasons</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — Structure</td>
+      <td class="section-content">The game runs in seasons, each approximately one month. At the start of a new season, Season Scores reset to zero. Lifetime scores, XP, and badges never reset.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section B — Season End</td>
+      <td class="section-content">At the close of each season, final standings are locked. The champion receives a Season Champion badge that will never be available again. Second and third place receive the Podium badge. The Treasury remembers who showed up.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section C — Current Season</td>
+      <td class="section-content">Season 1 is active. Leaderboard is live. Claim accordingly.</td>
+    </tr>
+  </table>
+
+  <!-- ARTICLE X -->
+  <div class="article-heading">Article X — Conflict &amp; Consent</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — Voluntary Participation</td>
+      <td class="section-content">No player shall be compelled to participate in any bet, challenge, or activity against their will. Opting out is always allowed, no explanation required.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section B — Disputes &amp; Resolution</td>
+      <td class="section-content">If disagreement arises over a bet, challenge, or rule: the matter shall be resolved by group vote among present players. In the event of a tie, the final decision will be made by rock-paper-scissors, witnessed by all.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section C — Rule of Good Faith</td>
+      <td class="section-content">All players are expected to act in good faith, with humor, humility, and the understanding that this is a game of absurdity and fun. Winning is temporary. Chaos is forever.</td>
+    </tr>
+  </table>
+
+  <!-- ARTICLE XI -->
+  <div class="article-heading">Article XI — Amendments</div>
+  <table class="section-table">
+    <tr>
+      <td class="section-label">Section A — Proposing Amendments</td>
+      <td class="section-content">Any player may propose a rule change, addition, or removal at a group event.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section B — Approval Process</td>
+      <td class="section-content">A change passes with a ⅔ majority vote of players present.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section C — Emergency Rules</td>
+      <td class="section-content">Temporary rules may be enacted for one event by simple majority vote and expire at the end unless made permanent by Article XI, Section B.</td>
+    </tr>
+    <tr>
+      <td class="section-label">Section D — Eternal Clause</td>
+      <td class="section-content">No rule shall be created that overrides the principle of fun, fairness, or voluntary participation. The game bends but does not break.</td>
+    </tr>
+  </table>
+
+  <!-- RATIFICATION -->
+  <div class="ratification">
+    Ratified by the Order of the Coin.<br>
+    Long May It Create Competitive Chaos.
+    <div class="platform-url">coingameplatform.vercel.app</div>
+  </div>
+
+  <!-- APPENDIX -->
+  <div class="appendix-title">Appendix of Competitive Chaos</div>
+  <div class="appendix-subtitle">Game, Challenge &amp; Shenanigan Specifics</div>
+
+  <div class="entry-title">Entry 1 — The Duel</div>
+  <div class="entry-desc">When two players or teams are itching to prove who's better at something — physical, mental, digital, or ridiculous — The Duel offers a direct and honorable way to compete.</div>
+  <div class="entry-body">
+    <p><strong>The Callout:</strong> One player proposes a challenge and places a coin bet on their own victory.<br><em>"I bet you 1 coin we can beat you at pickleball."</em></p>
+    <p><strong>The Acceptance:</strong> The second player accepts the terms and matches the coin bet.</p>
+    <p><strong>The Duel:</strong> The agreed-upon challenge is completed immediately or at the next appropriate opportunity. Examples include: pickleball, cornhole, Mario Kart, arm wrestling, push-up contest, or any mutually agreed-upon skill test.</p>
+    <p><strong>Victory:</strong> The winner takes both coins. In the case of a dispute, the group may vote, or rock-paper-scissors is played.</p>
+  </div>
+
+  <div class="entry-title">Entry 2 — The Wager</div>
+  <div class="entry-desc">When two players disagree on the outcome of an event — a sports play, game result, or absurd claim — they may settle it with a direct coin wager.</div>
+  <div class="entry-body">
+    <p><strong>The Offer:</strong> One player proposes a bet and clearly states the outcome they believe in.<br><em>"My coin's on Meatball."</em></p>
+    <p><strong>The Taker:</strong> Another player must explicitly accept, wagering a matching coin on the opposite outcome.<br><em>"I'll take that. My coin is on Little Doggy."</em></p>
+    <p><strong>Outcome:</strong> Whoever is correct takes both coins. In the case of a dispute, the group may vote, or rock-paper-scissors is played.</p>
+  </div>
+
+  <div class="entry-title">Entry 3 — The Game of Odds</div>
+  <div class="entry-desc">A player (the Challenger) dares another (the Challenged) to complete a task, framed as a question: "What are the odds you'd [steal a French fry / sing the chorus of 'Bohemian Rhapsody' / do a cartwheel]?"</div>
+  <div class="entry-body">
+    <p><strong>Buy-In:</strong> The Challenger submits 1 coin to initiate the challenge.</p>
+    <p><strong>The Challenged</strong> sets the odds (e.g., "1 in 15"). Both players count down and simultaneously announce a number between 1 and the declared max.</p>
+    <p><strong>If the numbers match:</strong> The Challenged must complete the task. The buy-in coin is awarded to them for following through.</p>
+    <p><strong>If the numbers don't match:</strong> No action. The Challenger keeps the coin.</p>
+    <p><strong>If the numbers match but the Challenged refuses:</strong> The Challenged pays 1 coin directly to the Challenger as a forfeit.</p>
+  </div>
+
+  <div class="entry-title">Entry 4 — TBD</div>
+  <div class="entry-desc">The Appendix is a living document. New entries may be ratified at any group event per Article XI.</div>
+
+</div>
+</body>
+</html>
