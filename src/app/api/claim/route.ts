@@ -220,9 +220,8 @@ export async function POST(request: NextRequest) {
         const resend = new Resend(process.env.RESEND_API_KEY);
         const sendAt = new Date(Date.now() + 30 * 60 * 1000);
         const stolenAt = new Date();
-        const stolenAtStr = stolenAt.toLocaleDateString('en-US', {
-          weekday: 'long', month: 'long', day: 'numeric',
-          hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
+        const stolenAtStr = stolenAt.toLocaleTimeString('en-US', {
+          hour: 'numeric', minute: '2-digit',
         });
         const revengeDeadline = new Date(Date.now() + 72 * 60 * 60 * 1000);
         const deadlineStr = revengeDeadline.toLocaleDateString('en-US', {
