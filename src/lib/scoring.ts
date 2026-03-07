@@ -41,6 +41,18 @@ export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
   const messages: string[] = [];
   const bonusBreakdown: Record<string, number> = {};
 
+  // --- Reclaim: coin was stolen from you — restore holdings, no points ---
+  if (ctx.isReclaim) {
+    messages.push('🔄 Reclaim — coin restored to your holdings.');
+    messages.push('No points awarded. The Treasury keeps the balance.');
+    return {
+      base_points: 0, effect_points: 0, bonus_points: 0,
+      story_bonus: 0, streak_multiplier: 1, total_points: 0,
+      bonus_breakdown: {}, effect_name: 'Reclaim',
+      rarity: ctx.coin.rarity, messages,
+    };
+  }
+
   // --- Base points from rarity ---
   let basePoints = RARITY_POINTS[ctx.coin.rarity] || 1;
   messages.push(`Base (${ctx.coin.rarity}): ${basePoints} pt${basePoints !== 1 ? 's' : ''}`);
@@ -136,9 +148,12 @@ export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
     messages.push('👑 Kingslayer! +2 pts (stole from the leader)');
   }
 
-  // Revenge: reclaim a coin stolen from you within 72h
-  // TODO: Check revenge eligibility in claim API and pass through context
-  // For now, this would be passed as a flag in context
+  // Revenge: steal from someone who stole from you within 72h
+  if (ctx.isRevenge && ctx.mode === 'stolen') {
+    bonusBreakdown.revenge = 2;
+    bonusPoints += 2;
+    messages.push(`⚔️ Revenge! +2 pts (they stole from you first)`);
+  }
 
   // Underdog: bottom 25% of players
   if (ctx.playerRankPercentile <= 25 && ctx.totalActivePlayers >= 4) {

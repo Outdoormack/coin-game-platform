@@ -162,6 +162,10 @@ export interface ClaimContext {
   claimsToday: number;
   // Last claim context (for mirror effect)
   lastClaimRarity: string | null;
+  // Reclaim: claimer is scanning back a coin that was just stolen FROM them
+  isReclaim: boolean;
+  // Revenge: claimer is stealing from someone who stole from them within 72h
+  isRevenge: boolean;
 }
 
 // ============================================================

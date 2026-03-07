@@ -114,6 +114,32 @@ export async function POST(request: NextRequest) {
       .eq('player_id', player.id)
       .gte('claimed_at', todayStart.toISOString());
 
+    // --- Detect reclaim (coin was stolen FROM current claimer recently) ---
+    const { data: recentTheft } = await supabase
+      .from('claims')
+      .select('id')
+      .eq('coin_id', coin.id)
+      .eq('mode', 'stolen')
+      .eq('previous_holder_id', player.id)
+      .gte('claimed_at', new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString())
+      .order('claimed_at', { ascending: false })
+      .limit(1);
+    const isReclaim = !!(recentTheft && recentTheft.length > 0);
+
+    // --- Detect revenge (previousHolder stole from current claimer within 72h) ---
+    let isRevenge = false;
+    if (mode === 'stolen' && previousHolder) {
+      const { data: priorTheft } = await supabase
+        .from('claims')
+        .select('id')
+        .eq('mode', 'stolen')
+        .eq('player_id', previousHolder.id)
+        .eq('previous_holder_id', player.id)
+        .gte('claimed_at', new Date(Date.now() - 72 * 60 * 60 * 1000).toISOString())
+        .limit(1);
+      isRevenge = !!(priorTheft && priorTheft.length > 0);
+    }
+
     // --- Get active season ---
     const { data: activeSeason } = await supabase
       .from('seasons')
@@ -137,7 +163,9 @@ export async function POST(request: NextRequest) {
       totalActivePlayers: activePlayers.length,
       streakWeeks: player.streak_weeks || 0,
       claimsToday: claimsToday || 0,
-      lastClaimRarity: null, // TODO: Fetch from last claim
+      lastClaimRarity: null,
+      isReclaim,
+      isRevenge,
     };
 
     // --- Calculate score ---
@@ -191,19 +219,20 @@ export async function POST(request: NextRequest) {
     await supabase.from('coins').update(coinUpdate).eq('id', coin.id);
 
     // --- Update player stats ---
-    const newXP = (player.xp || 0) + xpEarned;
+    // Reclaims restore holdings only — no points, no XP, not counted as a steal
+    const newXP = isReclaim ? (player.xp || 0) : (player.xp || 0) + xpEarned;
     const newTitle = titleFromXP(newXP);
     const newLevel = levelFromXP(newXP);
 
     await supabase.from('players').update({
-      season_score: (player.season_score || 0) + score.total_points,
-      lifetime_score: (player.lifetime_score || 0) + score.total_points,
+      season_score: isReclaim ? (player.season_score || 0) : (player.season_score || 0) + score.total_points,
+      lifetime_score: isReclaim ? (player.lifetime_score || 0) : (player.lifetime_score || 0) + score.total_points,
       xp: newXP,
       level: newLevel,
       title: newTitle,
       current_holdings: (player.current_holdings || 0) + 1,
-      total_claims: (player.total_claims || 0) + 1,
-      total_steals: (player.total_steals || 0) + (mode === 'stolen' ? 1 : 0),
+      total_claims: isReclaim ? (player.total_claims || 0) : (player.total_claims || 0) + 1,
+      total_steals: (player.total_steals || 0) + (!isReclaim && mode === 'stolen' ? 1 : 0),
       last_active_at: new Date().toISOString(),
     }).eq('id', player.id);
 
