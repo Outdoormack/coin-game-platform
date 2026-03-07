@@ -218,16 +218,22 @@ export async function POST(request: NextRequest) {
     if (mode === 'stolen' && previousHolder?.email && process.env.RESEND_API_KEY) {
       try {
         const resend = new Resend(process.env.RESEND_API_KEY);
-        const sendAt = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes from now
+        const sendAt = new Date(Date.now() + 30 * 60 * 1000);
+        const stolenAt = new Date();
+        const stolenAtStr = stolenAt.toLocaleDateString('en-US', {
+          weekday: 'long', month: 'long', day: 'numeric',
+          hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
+        });
         const revengeDeadline = new Date(Date.now() + 72 * 60 * 60 * 1000);
         const deadlineStr = revengeDeadline.toLocaleDateString('en-US', {
-          weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+          weekday: 'short', month: 'short', day: 'numeric',
+          hour: 'numeric', minute: '2-digit',
         });
 
         await resend.emails.send({
           from: 'Third Space Treasury <notifications@third-space-treasury.com>',
           to: previousHolder.email,
-          subject: `🗡️ ${cleanName} just stole your coin`,
+          subject: `🗡️ ${cleanName} Just Stole Your Coin`,
           scheduledAt: sendAt.toISOString(),
           html: `
             <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; background: #f5efe4; padding: 32px; border-radius: 12px; border: 1px solid #c9c2ae;">
@@ -239,11 +245,8 @@ export async function POST(request: NextRequest) {
 
               <hr style="border: none; border-top: 1px solid #c9c2ae; margin: 0 0 24px;" />
 
-              <p style="color: #1a1a1a; font-size: 16px; margin: 0 0 12px;">
-                The Treasury regrets to inform you that <strong>${cleanName}</strong> has stolen one of your coins.
-              </p>
-              <p style="color: #555; font-size: 14px; margin: 0 0 24px;">
-                This message was delayed 30 minutes to give them a head start. The Treasury operates on its own schedule.
+              <p style="color: #1a1a1a; font-size: 16px; margin: 0 0 20px;">
+                The Treasury regrets to inform you that at <strong>${stolenAtStr}</strong>, <strong>${cleanName}</strong> stole one of your coins.
               </p>
 
               <div style="background: #1e3b2a; color: #f7f3e6; border-radius: 10px; padding: 16px; text-align: center; margin-bottom: 24px;">

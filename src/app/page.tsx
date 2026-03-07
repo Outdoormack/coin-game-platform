@@ -180,7 +180,7 @@ export default function Home() {
               <div className="pt-2 border-t border-[#c9c2ae]">
                 <p className="text-xs font-bold text-[#1e3b2a] mb-1">🗡️ Theft Alerts</p>
                 <p className="text-[11px] text-gray-500 mb-2">
-                  Get an email 30 minutes after your coin is stolen. Optional — leave blank to skip.
+                  For classified alerts regarding crimes against your holdings. (Optional)
                 </p>
                 <form onSubmit={saveEmail} className="flex gap-2">
                   <input
