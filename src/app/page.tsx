@@ -1,21 +1,187 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Leaderboard from '@/components/Leaderboard';
+import RecentClaims from '@/components/RecentClaims';
+
+interface PlayerStats {
+  display_name: string;
+  title: string;
+  level: number;
+  xp: number;
+  season_score: number;
+  lifetime_score: number;
+  season_rank: number | null;
+  current_holdings: number;
+  total_claims: number;
+  total_steals: number;
+  coins_discovered: number;
+  streak_weeks: number;
+  total_coins: number;
+}
+
+interface Badge {
+  earned_at: string;
+  badge_definitions: { name: string; icon: string } | null;
+}
+
 export default function Home() {
+  const [nameInput, setNameInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [player, setPlayer] = useState<PlayerStats | null>(null);
+  const [badges, setBadges] = useState<Badge[]>([]);
+  const [notFound, setNotFound] = useState(false);
+
+  // Restore last player from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('playerName');
+    if (saved) {
+      setNameInput(saved);
+      fetchPlayer(saved);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchPlayer = async (name: string) => {
+    if (!name.trim()) return;
+    setLoading(true);
+    setNotFound(false);
+    setPlayer(null);
+    try {
+      const res = await fetch(`/api/player?name=${encodeURIComponent(name.trim())}`);
+      const data = await res.json();
+      if (data.ok) {
+        setPlayer(data.player);
+        setBadges(data.badges || []);
+        localStorage.setItem('playerName', name.trim());
+      } else {
+        setNotFound(true);
+      }
+    } catch {
+      setNotFound(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchPlayer(nameInput);
+  };
+
+  const streakLabel = (weeks: number) => {
+    if (weeks === 0) return null;
+    return `🔥 ${weeks}-week streak`;
+  };
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#2a332e] via-[#1d231f] to-[#151a17] flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white/[0.92] rounded-xl border border-[#c9c2ae] p-8 text-center shadow-lg">
-        <div className="text-5xl mb-4">🪙</div>
-        <h1 className="text-2xl font-extrabold text-[#1e3b2a] tracking-wide mb-2">
-          Third Space Treasury
-        </h1>
-        <p className="text-sm text-gray-600 leading-relaxed">
-          Scan a coin to play. Claim it. Trade it. Steal it. 
-          <br />Every scan is a new surprise.
-        </p>
-        <div className="mt-6 pt-4 border-t border-[#c9c2ae]">
-          <p className="text-xs text-gray-400">
-            Tap an NFC coin with your phone to get started.
-          </p>
+    <main className="min-h-screen bg-gradient-to-b from-[#2a332e] via-[#1d231f] to-[#151a17] p-4">
+      <div className="max-w-md mx-auto space-y-4">
+
+        {/* ── HEADER ── */}
+        <div className="bg-white/[0.92] rounded-xl border border-[#c9c2ae] p-5 shadow-lg text-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.jpg" alt="Third Space Treasury" className="w-16 h-16 object-contain mx-auto mb-2" />
+          <h1 className="text-xl font-extrabold text-[#1e3b2a] tracking-wide">Third Space Treasury</h1>
+          <p className="text-xs text-gray-500 mt-1 italic">In Chaos We Compete. In Coin We Trust.</p>
         </div>
+
+        {/* ── PLAYER STATS ── */}
+        <div className="bg-white/[0.92] rounded-xl border border-[#c9c2ae] p-5 shadow-lg">
+          <h2 className="text-sm font-extrabold text-[#1e3b2a] mb-3 uppercase tracking-wide">Check My Stats</h2>
+
+          <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
+            <input
+              type="text"
+              value={nameInput}
+              onChange={e => setNameInput(e.target.value)}
+              placeholder="Your name"
+              className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2f6f4f]"
+            />
+            <button
+              type="submit"
+              disabled={loading || !nameInput.trim()}
+              className="px-4 py-2 rounded-lg bg-[#1e3b2a] text-white text-sm font-bold hover:bg-[#254b37] disabled:opacity-50 transition-colors"
+            >
+              {loading ? '…' : 'Go'}
+            </button>
+          </form>
+
+          {notFound && (
+            <p className="text-sm text-red-500 text-center">No player found — scan a coin first to get on the board!</p>
+          )}
+
+          {player && (
+            <div className="space-y-3">
+              {/* Name + title */}
+              <div className="text-center pb-3 border-b border-[#c9c2ae]">
+                <p className="text-lg font-extrabold text-[#1e3b2a]">{player.display_name}</p>
+                <p className="text-xs text-gray-500">{player.title} · Level {player.level} · {player.xp} XP</p>
+                {player.season_rank && (
+                  <p className="text-xs font-bold text-[#2f6f4f] mt-0.5">#{player.season_rank} this season</p>
+                )}
+                {streakLabel(player.streak_weeks) && (
+                  <p className="text-xs text-orange-500 font-bold mt-0.5">{streakLabel(player.streak_weeks)}</p>
+                )}
+              </div>
+
+              {/* Score grid */}
+              <div className="grid grid-cols-2 gap-2">
+                <Stat label="Season Score" value={player.season_score.toFixed(1) + ' pts'} highlight />
+                <Stat label="Lifetime Score" value={player.lifetime_score.toFixed(1) + ' pts'} />
+                <Stat label="Total Claims" value={player.total_claims.toString()} />
+                <Stat label="Total Steals" value={player.total_steals.toString()} />
+                <Stat label="Coins Holding" value={player.current_holdings.toString()} />
+                <Stat label="Coins Discovered" value={`${player.coins_discovered} of ${player.total_coins}`} />
+              </div>
+
+              {/* Badges */}
+              {badges.length > 0 && (
+                <div className="pt-2 border-t border-[#c9c2ae]">
+                  <p className="text-xs font-bold text-[#1e3b2a] mb-2">Badges</p>
+                  <div className="flex flex-wrap gap-2">
+                    {badges.map((b, i) => (
+                      <span
+                        key={i}
+                        className="inline-flex items-center gap-1 text-xs bg-[#f7f3e6] border border-[#c9c2ae] rounded-full px-2 py-0.5"
+                        title={b.badge_definitions?.name}
+                      >
+                        {b.badge_definitions?.icon} {b.badge_definitions?.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* ── LEADERBOARD ── */}
+        <div className="bg-white/[0.92] rounded-xl border border-[#c9c2ae] p-5 shadow-lg">
+          <h2 className="text-sm font-extrabold text-[#1e3b2a] mb-3 uppercase tracking-wide">Leaderboard</h2>
+          <Leaderboard />
+        </div>
+
+        {/* ── RECENT CHAOS ── */}
+        <div className="bg-white/[0.92] rounded-xl border border-[#c9c2ae] p-5 shadow-lg">
+          <h2 className="text-sm font-extrabold text-[#1e3b2a] mb-3 uppercase tracking-wide">Recent Chaos</h2>
+          <RecentClaims />
+        </div>
+
+        <p className="text-center text-[10px] text-white/30 pb-2">
+          Tap an NFC coin to claim · coingameplatform.vercel.app
+        </p>
+
       </div>
     </main>
+  );
+}
+
+function Stat({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+  return (
+    <div className={`rounded-lg p-3 text-center ${highlight ? 'bg-[#1e3b2a] text-white' : 'bg-[#f7f3e6] text-[#1e3b2a]'}`}>
+      <p className={`text-lg font-extrabold leading-none ${highlight ? 'text-white' : 'text-[#1e3b2a]'}`}>{value}</p>
+      <p className={`text-[10px] mt-1 ${highlight ? 'text-white/70' : 'text-gray-500'}`}>{label}</p>
+    </div>
   );
 }
