@@ -1,6 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase, DEFAULT_GROUP_ID } from '@/lib/supabase';
 
+export async function PATCH(request: NextRequest) {
+  const { name, email } = await request.json();
+  if (!name?.trim()) return NextResponse.json({ ok: false, error: 'Name required' }, { status: 400 });
+
+  const { data: player } = await supabase
+    .from('players')
+    .select('id')
+    .eq('group_id', DEFAULT_GROUP_ID)
+    .ilike('display_name', name.trim())
+    .single();
+
+  if (!player) return NextResponse.json({ ok: false, error: 'Player not found' });
+
+  await supabase.from('players').update({ email: email?.trim() || null }).eq('id', player.id);
+
+  return NextResponse.json({ ok: true });
+}
+
 export async function GET(request: NextRequest) {
   const name = request.nextUrl.searchParams.get('name')?.trim();
   if (!name) return NextResponse.json({ ok: false, error: 'Name required' }, { status: 400 });
@@ -55,6 +73,7 @@ export async function GET(request: NextRequest) {
       coins_discovered: player.coins_discovered,
       streak_weeks: player.streak_weeks,
       total_coins: totalCoins || 0,
+      email: player.email || null,
     },
     badges: badges || [],
   });

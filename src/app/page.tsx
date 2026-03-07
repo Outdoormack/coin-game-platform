@@ -18,6 +18,7 @@ interface PlayerStats {
   coins_discovered: number;
   streak_weeks: number;
   total_coins: number;
+  email: string | null;
 }
 
 interface Badge {
@@ -31,6 +32,9 @@ export default function Home() {
   const [player, setPlayer] = useState<PlayerStats | null>(null);
   const [badges, setBadges] = useState<Badge[]>([]);
   const [notFound, setNotFound] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [emailSaving, setEmailSaving] = useState(false);
+  const [emailSaved, setEmailSaved] = useState(false);
 
   // Restore last player from localStorage
   useEffect(() => {
@@ -53,6 +57,8 @@ export default function Home() {
       if (data.ok) {
         setPlayer(data.player);
         setBadges(data.badges || []);
+        setEmailInput(data.player.email || '');
+        setEmailSaved(false);
         localStorage.setItem('playerName', name.trim());
       } else {
         setNotFound(true);
@@ -67,6 +73,23 @@ export default function Home() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     fetchPlayer(nameInput);
+  };
+
+  const saveEmail = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!player) return;
+    setEmailSaving(true);
+    try {
+      await fetch('/api/player', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: player.display_name, email: emailInput }),
+      });
+      setEmailSaved(true);
+      setPlayer(prev => prev ? { ...prev, email: emailInput } : prev);
+    } finally {
+      setEmailSaving(false);
+    }
   };
 
   const streakLabel = (weeks: number) => {
@@ -152,6 +175,30 @@ export default function Home() {
                   </div>
                 </div>
               )}
+
+              {/* Theft alerts email */}
+              <div className="pt-2 border-t border-[#c9c2ae]">
+                <p className="text-xs font-bold text-[#1e3b2a] mb-1">🗡️ Theft Alerts</p>
+                <p className="text-[11px] text-gray-500 mb-2">
+                  Get an email 30 minutes after your coin is stolen. Optional — leave blank to skip.
+                </p>
+                <form onSubmit={saveEmail} className="flex gap-2">
+                  <input
+                    type="email"
+                    value={emailInput}
+                    onChange={e => { setEmailInput(e.target.value); setEmailSaved(false); }}
+                    placeholder="your@email.com"
+                    className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2f6f4f]"
+                  />
+                  <button
+                    type="submit"
+                    disabled={emailSaving}
+                    className="px-3 py-2 rounded-lg bg-[#1e3b2a] text-white text-xs font-bold hover:bg-[#254b37] disabled:opacity-50 transition-colors"
+                  >
+                    {emailSaving ? '…' : emailSaved ? '✓ Saved' : 'Save'}
+                  </button>
+                </form>
+              </div>
             </div>
           )}
         </div>

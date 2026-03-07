@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { supabase, DEFAULT_GROUP_ID } from '@/lib/supabase';
 import { calculateScore, calculateXP, titleFromXP, levelFromXP } from '@/lib/scoring';
 import { ClaimRequest, ClaimContext, Coin, Player } from '@/lib/types';
+import { Resend } from 'resend';
 
 export async function POST(request: NextRequest) {
   try {
@@ -211,6 +212,64 @@ export async function POST(request: NextRequest) {
       await supabase.from('players').update({
         current_holdings: Math.max(0, (previousHolder.current_holdings || 0) - 1),
       }).eq('id', previousHolder.id);
+    }
+
+    // --- Send theft notification email (30-min delay) ---
+    if (mode === 'stolen' && previousHolder?.email && process.env.RESEND_API_KEY) {
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
+        const sendAt = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes from now
+        const revengeDeadline = new Date(Date.now() + 72 * 60 * 60 * 1000);
+        const deadlineStr = revengeDeadline.toLocaleDateString('en-US', {
+          weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+        });
+
+        await resend.emails.send({
+          from: 'Third Space Treasury <notifications@third-space-treasury.com>',
+          to: previousHolder.email,
+          subject: `🗡️ ${cleanName} just stole your coin`,
+          scheduledAt: sendAt.toISOString(),
+          html: `
+            <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; background: #f5efe4; padding: 32px; border-radius: 12px; border: 1px solid #c9c2ae;">
+              <div style="text-align: center; margin-bottom: 24px;">
+                <img src="https://coingameplatform.vercel.app/logo.jpg" alt="Third Space Treasury" style="width: 64px; height: 64px; object-fit: contain;" />
+                <h2 style="color: #1e3b2a; font-size: 18px; margin: 8px 0 4px;">Third Space Treasury</h2>
+                <p style="color: #888; font-size: 12px; font-style: italic; margin: 0;">In Chaos We Compete. In Coin We Trust.</p>
+              </div>
+
+              <hr style="border: none; border-top: 1px solid #c9c2ae; margin: 0 0 24px;" />
+
+              <p style="color: #1a1a1a; font-size: 16px; margin: 0 0 12px;">
+                The Treasury regrets to inform you that <strong>${cleanName}</strong> has stolen one of your coins.
+              </p>
+              <p style="color: #555; font-size: 14px; margin: 0 0 24px;">
+                This message was delayed 30 minutes to give them a head start. The Treasury operates on its own schedule.
+              </p>
+
+              <div style="background: #1e3b2a; color: #f7f3e6; border-radius: 10px; padding: 16px; text-align: center; margin-bottom: 24px;">
+                <p style="margin: 0 0 4px; font-size: 13px; opacity: 0.8;">Revenge window closes</p>
+                <p style="margin: 0; font-size: 16px; font-weight: bold;">${deadlineStr}</p>
+                <p style="margin: 4px 0 0; font-size: 12px; opacity: 0.7;">Reclaim the coin within 72 hours for +2 bonus points</p>
+              </div>
+
+              <div style="text-align: center;">
+                <a href="https://coingameplatform.vercel.app"
+                   style="display: inline-block; background: #1e3b2a; color: #f7f3e6; text-decoration: none; padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: bold;">
+                  Check the Leaderboard
+                </a>
+              </div>
+
+              <p style="color: #aaa; font-size: 11px; text-align: center; margin: 24px 0 0;">
+                You're receiving this because you have theft alerts enabled.<br/>
+                Manage your preferences at <a href="https://coingameplatform.vercel.app" style="color: #aaa;">coingameplatform.vercel.app</a>
+              </p>
+            </div>
+          `,
+        });
+      } catch (emailErr) {
+        // Non-fatal — log but don't fail the claim
+        console.error('Email send error:', emailErr);
+      }
     }
 
     // --- Record discovery ---
