@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Third Space Treasury — Game Night House Rules</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5efe4;
+      color: #1a1a1a;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .page {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 28px 20px 48px;
+    }
+
+    /* ── HEADER ── */
+    .cover-header {
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #1a1a1a;
+      margin-bottom: 16px;
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      margin-bottom: 12px;
+    }
+
+    .cover-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .tagline {
+      font-style: italic;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .doc-meta {
+      font-size: 10px;
+      color: #999;
+      text-align: center;
+      margin-bottom: 28px;
+      margin-top: 12px;
+    }
+
+    /* ── PREAMBLE ── */
+    .preamble {
+      font-style: italic;
+      font-size: 13.5px;
+      color: #444;
+      margin-bottom: 28px;
+      padding: 14px 16px;
+      border-left: 3px solid #1e3b2a;
+      background: rgba(30, 59, 42, 0.04);
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* ── SECTION HEADERS ── */
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin-top: 36px;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1.5px solid #1a1a1a;
+    }
+
+    p {
+      font-size: 14.5px;
+      margin-bottom: 12px;
+    }
+
+    /* ── AWARD CARDS ── */
+    .award-card {
+      background: #fff8ee;
+      border: 1px solid #d6cfc4;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+
+    .award-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .award-emoji {
+      font-size: 22px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .award-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .award-coins {
+      margin-left: auto;
+      font-size: 11px;
+      color: #1e3b2a;
+      font-weight: 600;
+      background: rgba(30, 59, 42, 0.1);
+      padding: 2px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .award-trigger {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.5;
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: rgba(30, 59, 42, 0.06);
+      border: 1px solid rgba(30, 59, 42, 0.2);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 16px 0 24px;
+    }
+
+    .callout-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 11px;
+      color: #1e3b2a;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .callout p {
+      font-size: 13px;
+      margin-bottom: 0;
+      color: #333;
+    }
+
+    /* ── NUMBERED LIST ── */
+    ol.procedure {
+      padding-left: 22px;
+      margin: 10px 0 16px;
+    }
+
+    ol.procedure li {
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    /* ── PROVISION ── */
+    .provision {
+      font-size: 13.5px;
+      margin-bottom: 12px;
+      padding-left: 12px;
+      border-left: 2px solid #d6cfc4;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid #c9c2ae;
+      font-size: 11px;
+      color: #aaa;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .footer a {
+      color: #1e3b2a;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="cover-header">
+    <img class="logo" src="https://coingameplatform.vercel.app/logo.jpg" alt="Third Space Treasury" />
+    <div class="cover-title">Game Night<br/>House Rules</div>
+    <div class="tagline">An Official Supplement to the Constitution of the Third Space Treasury</div>
+  </div>
+  <div class="doc-meta">Issued by the Treasury · Effective Immediately · Subject to Amendment by Popular Chaos</div>
+
+  <!-- PREAMBLE -->
+  <div class="preamble">
+    The Treasury recognizes that its citizens gather, from time to time, to engage in recreational competition of the tabletop variety. Whereupon such gatherings occur, coins shall not merely observe — they shall participate.
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2>§ 1 — The Ante</h2>
+  <p>At the start of each Game Night, every attending citizen contributes one (1) coin to <strong>The Pot</strong> — a central collection of unclaimed coins visible to all.</p>
+  <div class="callout">
+    <div class="callout-title">The Pot</div>
+    <p>Pot coins sit unclaimed in the center. When awarded, the recipient scans immediately. Pot coins not awarded by end of night go to the Final Scramble (§ 5).</p>
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2>§ 2 — Awards</h2>
+  <p>The following awards are granted throughout the evening — once per game round unless noted.</p>
+
+  <div class="award-card">
+    <div class="award-header">
+      <span class="award-emoji">🏆</span>
+      <span class="award-name">Victor's Claim</span>
+      <span class="award-coins">1 from Pot</span>
+    </div>
+    <div class="award-trigger">Win a game round outright.</div>
+  </div>
+
+  <div class="award-card">
+    <div class="award-header">
+      <span class="award-emoji">😂</span>
+      <span class="award-name">Moment of the Night</span>
+      <span class="award-coins">1 from Pot</span>
+    </div>
+    <div class="award-trigger">Group votes for the funniest, most chaotic, or most memorable moment of the round.</div>
+  </div>
+
+  <div class="award-card">
+    <div class="award-header">
+      <span class="award-emoji">🗡️</span>
+      <span class="award-name">Best Betrayal</span>
+      <span class="award-coins">1 from Pot</span>
+    </div>
+    <div class="award-trigger"><em>Social deduction games only.</em> Group votes for the most devastating bluff, play, or double-cross of the round.</div>
+  </div>
+
+  <div class="award-card">
+    <div class="award-header">
+      <span class="award-emoji">📡</span>
+      <span class="award-name">Bullseye</span>
+      <span class="award-coins">1 from Pot</span>
+    </div>
+    <div class="award-trigger"><em>Wavelength only.</em> Closest guess to the target in the round.</div>
+  </div>
+
+  <div class="award-card">
+    <div class="award-header">
+      <span class="award-emoji">😬</span>
+      <span class="award-name">Consolation Prize</span>
+      <span class="award-coins">1 from Pot</span>
+    </div>
+    <div class="award-trigger">Last place player receives a coin. Nobody goes home empty-handed. It is still embarrassing.</div>
+  </div>
+
+  <div class="award-card">
+    <div class="award-header">
+      <span class="award-emoji">🔥</span>
+      <span class="award-name">Hot Streak</span>
+      <span class="award-coins">Steal from player</span>
+    </div>
+    <div class="award-trigger">Win two consecutive rounds in the same evening. Steal one coin directly from any other player — bypassing the Pot.</div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">On Voting</div>
+    <p>Subjective awards are settled by quick group vote — majority rules, host breaks ties. Thirty (30) seconds max. The Treasury does not convene deliberation panels.</p>
+  </div>
+
+  <!-- SECTION 3 -->
+  <h2>§ 3 — Claiming Your Award</h2>
+  <ol class="procedure">
+    <li>Scan the NFC coin with your phone.</li>
+    <li>Enter your name (or confirm if saved).</li>
+    <li>Select <strong>Earned</strong> (Pot coin) or <strong>Stolen</strong> (player steal).</li>
+    <li>Write a story. The chaos deserves documentation.</li>
+    <li>Take a photo if the moment demands it.</li>
+  </ol>
+  <p>All Game Night claims count toward season score, leaderboard rank, streaks, and badges.</p>
+
+  <!-- SECTION 4 -->
+  <h2>§ 4 — The Hot Streak Rule</h2>
+  <p>Win two consecutive rounds and you may steal one coin directly from any player present. The target may refuse — but refusal costs <strong>5 points</strong> from their Treasury score, enforced on the honor system.</p>
+  <p>Running from a Hot Streak is legal. It is also embarrassing.</p>
+
+  <!-- SECTION 5 -->
+  <h2>§ 5 — The Final Scramble</h2>
+  <p>After the last game, remaining Pot coins go to the center. The host counts down from three. At zero — free-for-all. First to scan it, claims it.</p>
+  <p>There are no rules during the Final Scramble. Only winners and people who didn't move fast enough.</p>
+
+  <!-- SECTION 6 -->
+  <h2>§ 6 — Story Requirements</h2>
+  <p>Every Game Night claim must include a story. The app will not stop you from skipping it. Your fellow citizens will know.</p>
+
+  <!-- SECTION 7 -->
+  <h2>§ 7 — General Provisions</h2>
+
+  <div class="provision"><strong>7.1 Host Authority.</strong> The host holds final interpretive authority. All rulings are final until the next Game Night, at which point nobody will remember anyway.</div>
+  <div class="provision"><strong>7.2 No Coin, No Ante.</strong> Players without a coin may not participate in the Pot. Hot Streak steals and consolation awards remain available at host discretion.</div>
+  <div class="provision"><strong>7.3 Pot Shortfall.</strong> If the Pot runs dry, remaining awards are fulfilled via player-to-player steals by group consensus.</div>
+  <div class="provision"><strong>7.4 Game Compatibility.</strong> These rules layer on top of any tabletop game without modifying that game's rules. Awards distribute at the next natural break if timing conflicts.</div>
+  <div class="provision"><strong>7.5 Amendment.</strong> Rules may be amended by majority vote. Amendments take effect at the next Game Night.</div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>Third Space Treasury · <a href="https://coingameplatform.vercel.app">coingameplatform.vercel.app</a></p>
+    <p style="margin-top: 4px;">In Chaos We Compete. In Coin We Trust.</p>
+  </div>
+
+</div>
+</body>
+</html>
