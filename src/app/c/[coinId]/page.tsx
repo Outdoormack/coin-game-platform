@@ -90,6 +90,9 @@ export default async function CoinPage({ params }: PageProps) {
             {typedCoin.heading && (
               <h2 className="text-lg font-extrabold text-[#1e3b2a]">{typedCoin.heading}</h2>
             )}
+            {typedCoin.message && (
+              <p className="text-sm text-gray-600 italic">{typedCoin.message}</p>
+            )}
 
             {/* Rarity + Effect + Status badges — tappable with info popups */}
             <BadgeRow
@@ -118,6 +121,36 @@ export default async function CoinPage({ params }: PageProps) {
             />
           </div>
         </div>
+
+        {/* How to Play */}
+        <details className="bg-white/[0.92] rounded-xl border border-[#c9c2ae] shadow-lg group" open>
+          <summary className="p-4 cursor-pointer list-none flex items-center justify-between select-none">
+            <h3 className="text-sm font-extrabold text-[#1e3b2a]">📖 How to Play</h3>
+            <span className="text-xs text-gray-400 group-open:hidden">tap to expand</span>
+            <span className="text-xs text-gray-400 hidden group-open:inline">tap to collapse</span>
+          </summary>
+          <div className="px-4 pb-4 space-y-3 text-sm text-gray-700">
+            <ul className="space-y-2">
+              <li><span className="font-semibold text-[#1e3b2a]">Scan to claim.</span> Tap your phone to any Treasury coin to open its page, then enter your name and claim it.</li>
+              <li><span className="font-semibold text-[#1e3b2a]">Earned or Stolen?</span> If the coin is unclaimed, choose <em>Earned</em>. If someone else holds it and you got your hands on it — choose <em>Stolen</em>. Steals are worth more points.</li>
+              <li><span className="font-semibold text-[#1e3b2a]">No double-dipping.</span> You can&apos;t claim the same coin twice in a row. Someone else has to hold it first.</li>
+              <li><span className="font-semibold text-[#1e3b2a]">Carry limit.</span> Don&apos;t physically hold more than five coins at once (Article IV).</li>
+              <li><span className="font-semibold text-[#1e3b2a]">Bonus points.</span> Add a story and/or photo when you claim to earn extra points. Make it good.</li>
+            </ul>
+            <p className="text-xs italic text-gray-500">Scan to claim. Trade boldly. Sneak cleverly. Brag responsibly.</p>
+            <div className="flex flex-wrap gap-2 pt-1">
+              <a href="/" className="inline-flex items-center gap-1 text-xs font-semibold text-[#1e3b2a] bg-[#1e3b2a]/10 hover:bg-[#1e3b2a]/20 px-3 py-1.5 rounded-full transition-colors">
+                📊 Stats &amp; Leaderboard
+              </a>
+              <a href="/constitution-mobile.html" className="inline-flex items-center gap-1 text-xs font-semibold text-[#1e3b2a] bg-[#1e3b2a]/10 hover:bg-[#1e3b2a]/20 px-3 py-1.5 rounded-full transition-colors">
+                📜 The Constitution
+              </a>
+              <a href="/house-rules-mobile.html" className="inline-flex items-center gap-1 text-xs font-semibold text-[#1e3b2a] bg-[#1e3b2a]/10 hover:bg-[#1e3b2a]/20 px-3 py-1.5 rounded-full transition-colors">
+                🎮 Game Night Rules
+              </a>
+            </div>
+          </div>
+        </details>
 
         {/* Leaderboard */}
         <div className="bg-white/[0.92] rounded-xl border border-[#c9c2ae] p-4 shadow-lg">
