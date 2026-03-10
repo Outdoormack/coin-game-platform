@@ -145,8 +145,8 @@ export default async function CoinPage({ params }: PageProps) {
               <a href="/constitution-mobile.html" className="inline-flex items-center gap-1 text-xs font-semibold text-[#1e3b2a] bg-[#1e3b2a]/10 hover:bg-[#1e3b2a]/20 px-3 py-1.5 rounded-full transition-colors">
                 📜 The Constitution
               </a>
-              <a href="/house-rules-mobile.html" className="inline-flex items-center gap-1 text-xs font-semibold text-[#1e3b2a] bg-[#1e3b2a]/10 hover:bg-[#1e3b2a]/20 px-3 py-1.5 rounded-full transition-colors">
-                🎮 Game Night Rules
+              <a href="/photos" className="inline-flex items-center gap-1 text-xs font-semibold text-[#1e3b2a] bg-[#1e3b2a]/10 hover:bg-[#1e3b2a]/20 px-3 py-1.5 rounded-full transition-colors">
+                📸 Photo Album
               </a>
             </div>
           </div>
