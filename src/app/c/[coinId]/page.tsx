@@ -4,6 +4,7 @@ import ClaimForm from '@/components/ClaimForm';
 import Leaderboard from '@/components/Leaderboard';
 import RecentClaims from '@/components/RecentClaims';
 import BadgeRow from '@/components/BadgeRow';
+import InstallPrompt from '@/components/InstallPrompt';
 
 const RARITY_DISPLAY: Record<string, { label: string; stars: string; color: string }> = {
   common: { label: 'Common', stars: '', color: 'text-gray-500' },
@@ -183,6 +184,8 @@ export default async function CoinPage({ params }: PageProps) {
           <RecentClaims />
         </div>
       </div>
+
+      <InstallPrompt />
     </main>
   );
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Leaderboard from '@/components/Leaderboard';
 import RecentClaims from '@/components/RecentClaims';
+import InstallPrompt from '@/components/InstallPrompt';
 
 interface PlayerStats {
   display_name: string;
@@ -220,6 +221,8 @@ export default function Home() {
         </p>
 
       </div>
+
+      <InstallPrompt />
     </main>
   );
 }
