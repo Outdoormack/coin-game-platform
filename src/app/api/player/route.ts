@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase, DEFAULT_GROUP_ID } from '@/lib/supabase';
+import { supabaseAdmin as supabase, DEFAULT_GROUP_ID } from '@/lib/supabase-admin';
 
 export async function PATCH(request: NextRequest) {
   const { name, email } = await request.json();

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase, DEFAULT_GROUP_ID } from '@/lib/supabase';
+import { supabaseAdmin as supabase, DEFAULT_GROUP_ID } from '@/lib/supabase-admin';
 import { calculateScore, calculateXP, titleFromXP, levelFromXP } from '@/lib/scoring';
 import { ClaimRequest, ClaimContext, Coin, Player } from '@/lib/types';
 import { Resend } from 'resend';
