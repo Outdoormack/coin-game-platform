@@ -40,13 +40,23 @@ interface PageProps {
 export default async function CoinPage({ params }: PageProps) {
   const { coinId } = await params;
 
-  // Fetch coin data
-  const { data: coin } = await supabase
-    .from('coins')
-    .select('*, current_holder:players!coins_current_holder_id_fkey(display_name, title)')
-    .eq('group_id', DEFAULT_GROUP_ID)
-    .eq('external_id', coinId)
-    .single();
+  // Fetch coin data + announcement in parallel
+  const [{ data: coin }, { data: announcementSetting }] = await Promise.all([
+    supabase
+      .from('coins')
+      .select('*, current_holder:players!coins_current_holder_id_fkey(display_name, title)')
+      .eq('group_id', DEFAULT_GROUP_ID)
+      .eq('external_id', coinId)
+      .single(),
+    supabase
+      .from('group_settings')
+      .select('value')
+      .eq('group_id', DEFAULT_GROUP_ID)
+      .eq('key', 'announcement_text')
+      .single(),
+  ]);
+
+  const announcementText = announcementSetting?.value?.trim() || null;
 
   if (!coin) {
     return (
@@ -78,6 +88,15 @@ export default async function CoinPage({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#2a332e] via-[#1d231f] to-[#151a17] p-4">
       <div className="max-w-lg mx-auto space-y-4">
+
+        {/* Announcement Banner */}
+        {announcementText && (
+          <div className="bg-[#f7f3e6] border border-[#c9c2ae] rounded-xl px-4 py-3 flex items-start gap-3 shadow">
+            <span className="text-lg leading-none mt-0.5">📣</span>
+            <p className="text-sm font-medium text-[#1e3b2a] leading-snug">{announcementText}</p>
+          </div>
+        )}
+
         {/* Header Card */}
         <div className="bg-white/[0.92] rounded-xl border border-[#c9c2ae] p-4 shadow-lg">
           {/* Top bar */}
