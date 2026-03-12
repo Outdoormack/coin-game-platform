@@ -21,6 +21,7 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+  try {
   const supabase = createAdminClient();
   const name = request.nextUrl.searchParams.get('name')?.trim();
   if (!name) return NextResponse.json({ ok: false, error: 'Name required' }, { status: 400 });
@@ -79,4 +80,8 @@ export async function GET(request: NextRequest) {
     },
     badges: badges || [],
   });
+  } catch (err) {
+    console.error('Player GET error:', err);
+    return NextResponse.json({ ok: false, error: 'Internal server error' }, { status: 500 });
+  }
 }
