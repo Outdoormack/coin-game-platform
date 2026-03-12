@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin as supabase, DEFAULT_GROUP_ID } from '@/lib/supabase-admin';
+import { createAdminClient, DEFAULT_GROUP_ID } from '@/lib/supabase-admin';
 
 export async function PATCH(request: NextRequest) {
+  const supabase = createAdminClient();
   const { name, email } = await request.json();
   if (!name?.trim()) return NextResponse.json({ ok: false, error: 'Name required' }, { status: 400 });
 
@@ -20,6 +21,7 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+  const supabase = createAdminClient();
   const name = request.nextUrl.searchParams.get('name')?.trim();
   if (!name) return NextResponse.json({ ok: false, error: 'Name required' }, { status: 400 });
 

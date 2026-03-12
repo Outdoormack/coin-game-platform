@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin as supabase, DEFAULT_GROUP_ID } from '@/lib/supabase-admin';
+import { createAdminClient, DEFAULT_GROUP_ID } from '@/lib/supabase-admin';
 import { calculateScore, calculateXP, titleFromXP, levelFromXP } from '@/lib/scoring';
 import { ClaimRequest, ClaimContext, Coin, Player } from '@/lib/types';
 import { Resend } from 'resend';
 
 export async function POST(request: NextRequest) {
+  const supabase = createAdminClient();
   try {
     const body: ClaimRequest = await request.json();
     const { coinExternalId, playerName, mode, storyText, photoUrl } = body;
