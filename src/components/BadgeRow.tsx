@@ -91,7 +91,7 @@ const EFFECT_INFO: Record<string, Badge | null> = {
     icon: '🔧',
     label: 'Rust Restorer',
     color: 'text-gray-700',
-    description: "This coin loses value the longer it sits unclaimed (down to 0). Claiming it restores its full value plus a +1 Restorer bonus.",
+    description: "This coin is immune to rusting. It can never decay, no matter how long it sits. A rare perk in a world of chaos.",
   },
 };
 
@@ -113,7 +113,7 @@ const STATUS_INFO: Record<string, Badge | null> = {
     icon: '🟤',
     label: 'RUSTED',
     color: 'bg-amber-100 text-amber-700 border-amber-300',
-    description: "This coin hasn't been claimed in a while and has lost some value. Claim it to restore it — and earn a Restorer bonus.",
+    description: "This coin sat idle for too long and rusted. The holder lost 1 point. Claim it to restore it and earn a +1 restore bonus.",
   },
   bounty: {
     icon: '🎯',

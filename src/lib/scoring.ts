@@ -127,11 +127,9 @@ export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
       break;
 
     case 'rust':
-      // Restoring a rusted coin gives +1 bonus
-      if (ctx.coin.status === 'rusted') {
-        effectPoints = 1;
-        messages.push(`${EFFECT_ICONS.rust} Restored! +1 bonus for reviving a dormant coin`);
-      }
+      // Rust Restorer coins are immune to rusting — no special scoring effect needed.
+      // The restore bonus for claiming ANY rusted coin is handled below.
+      messages.push(`${EFFECT_ICONS.rust} Rust Restorer: This coin is immune to rusting`);
       break;
 
     default:
@@ -140,6 +138,13 @@ export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
 
   // --- Situation bonuses ---
   let bonusPoints = 0;
+
+  // Rust restore: claiming any rusted coin gives +1 bonus
+  if (ctx.coin.status === 'rusted') {
+    bonusBreakdown.rust_restore = 1;
+    bonusPoints += 1;
+    messages.push('🔧 Restored! +1 pt for reviving a dormant coin');
+  }
 
   // Kingslayer: steal from #1 player
   if (ctx.mode === 'stolen' && ctx.previousHolder && ctx.previousHolderRank === 1) {
