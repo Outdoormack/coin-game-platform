@@ -225,20 +225,25 @@ export async function POST(request: NextRequest) {
     const newTitle = titleFromXP(newXP);
     const newLevel = levelFromXP(newXP);
 
+    // Holdings only change on earned claims (physical coin transfer).
+    // Steals are digital-only — the physical coin stays with the other player.
+    const holdingsChange = (mode === 'earned' && !isReclaim) ? 1 : 0;
+
     await supabase.from('players').update({
       season_score: isReclaim ? (player.season_score || 0) : (player.season_score || 0) + score.total_points,
       lifetime_score: isReclaim ? (player.lifetime_score || 0) : (player.lifetime_score || 0) + score.total_points,
       xp: newXP,
       level: newLevel,
       title: newTitle,
-      current_holdings: (player.current_holdings || 0) + 1,
+      current_holdings: (player.current_holdings || 0) + holdingsChange,
       total_claims: isReclaim ? (player.total_claims || 0) : (player.total_claims || 0) + 1,
       total_steals: (player.total_steals || 0) + (!isReclaim && mode === 'stolen' ? 1 : 0),
       last_active_at: new Date().toISOString(),
     }).eq('id', player.id);
 
     // --- Update previous holder's holdings count ---
-    if (previousHolder) {
+    // Only decrease on earned claims (physical transfer). Steals don't move the physical coin.
+    if (previousHolder && mode === 'earned') {
       await supabase.from('players').update({
         current_holdings: Math.max(0, (previousHolder.current_holdings || 0) - 1),
       }).eq('id', previousHolder.id);
