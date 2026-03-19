@@ -175,13 +175,14 @@ export default async function CoinPage({ params }: PageProps) {
           </summary>
           <div className="px-4 pb-4 space-y-3 text-sm text-gray-700">
             <ul className="space-y-2">
-              <li><span className="font-semibold text-[#1e3b2a]">Scan to claim.</span> Tap your phone to any Treasury coin to open its page, then enter your name and claim it.</li>
-              <li><span className="font-semibold text-[#1e3b2a]">Earned or Stolen?</span> If the coin is unclaimed, choose <em>Earned</em>. If someone else holds it and you got your hands on it — choose <em>Stolen</em>. Steals are worth more points.</li>
-              <li><span className="font-semibold text-[#1e3b2a]">No double-dipping.</span> You can&apos;t claim the same coin twice in a row. Someone else has to hold it first.</li>
-              <li><span className="font-semibold text-[#1e3b2a]">Carry limit.</span> Don&apos;t physically hold more than five coins at once (Article IV).</li>
-              <li><span className="font-semibold text-[#1e3b2a]">Bonus points.</span> Add a story and/or photo when you claim to earn extra points. Make it good.</li>
+              <li><span className="font-semibold text-[#1e3b2a]">Scan to claim.</span> Tap your phone to any Treasury coin to open its vault, then enter your name and claim it. (Make sure NFC is turned on. On Samsung, the NFC scanner is in the middle of the back of the phone. On iPhone, it&apos;s along the top edge near the camera.)</li>
+              <li><span className="font-semibold text-[#1e3b2a]">Earned or Stolen?</span> If you won the physical coin from another player through an act of chaos — choose <em>Earned</em> to increase your holdings. If someone else holds it and you got your hands on it — choose <em>Stolen</em>. Steals are worth more points but don&apos;t add to your holdings. (If the coin is unclaimed, choose <em>Earned</em>.)</li>
+              <li><span className="font-semibold text-[#1e3b2a]">No double-dipping.</span> You can&apos;t claim the same coin twice in a row. Create some chaos and pass the coin to someone else first.</li>
+              <li><span className="font-semibold text-[#1e3b2a]">No hoarding.</span> Don&apos;t physically hold more than five coins at once (Article IV).</li>
+              <li><span className="font-semibold text-[#1e3b2a]">Bonus points.</span> Add a story and/or photo when you claim to earn extra points. Make it good — the ledger tells all.</li>
             </ul>
             <p className="text-xs italic text-gray-500">Scan to claim. Trade boldly. Sneak cleverly. Brag responsibly.</p>
+            <p className="text-xs italic text-gray-500">May fortune favor the bold… and the sneaky.</p>
           </div>
         </details>
 
