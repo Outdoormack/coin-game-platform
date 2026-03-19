@@ -163,6 +163,14 @@ export default async function CoinPage({ params }: PageProps) {
             >
               📊 Player Stats &amp; Leaderboard
             </a>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfDbpxQEi-CaCL6vLVgx9yuXxrz-0npOxhY7w4DvLRtTl3O4A/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 w-full py-2 rounded-xl text-xs font-semibold text-gray-500 hover:text-[#1e3b2a] transition-colors"
+            >
+              💬 Send Feedback
+            </a>
           </div>
         </div>
 

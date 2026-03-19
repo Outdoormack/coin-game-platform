@@ -223,8 +223,19 @@ export default function Home() {
           <RecentClaims />
         </div>
 
+        <div className="text-center py-2">
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfDbpxQEi-CaCL6vLVgx9yuXxrz-0npOxhY7w4DvLRtTl3O4A/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/40 hover:text-white/70 transition-colors"
+          >
+            💬 Send Feedback
+          </a>
+        </div>
+
         <p className="text-center text-[10px] text-white/30 pb-2">
-          Tap an NFC coin to claim · coingameplatform.vercel.app
+          Tap an NFC coin to claim · third-space-treasury.com
         </p>
 
       </div>
