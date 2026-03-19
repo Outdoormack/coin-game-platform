@@ -140,6 +140,30 @@ export default async function CoinPage({ params }: PageProps) {
               currentHolderName={typedCoin.current_holder?.display_name || null}
             />
           </div>
+
+          {/* Navigation buttons */}
+          <div className="mt-3 space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <a
+                href="/constitution-mobile.html"
+                className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl border-2 border-[#c9c2ae] bg-[#f7f3e6] text-sm font-bold text-[#1e3b2a] hover:bg-[#ede8d6] transition-colors"
+              >
+                📜 The Constitution
+              </a>
+              <a
+                href="/photos"
+                className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl border-2 border-[#c9c2ae] bg-[#f7f3e6] text-sm font-bold text-[#1e3b2a] hover:bg-[#ede8d6] transition-colors"
+              >
+                📸 Photo Album
+              </a>
+            </div>
+            <a
+              href="/"
+              className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl border-2 border-[#c9c2ae] bg-[#f7f3e6] text-sm font-bold text-[#1e3b2a] hover:bg-[#ede8d6] transition-colors"
+            >
+              📊 Player Stats &amp; Leaderboard
+            </a>
+          </div>
         </div>
 
         {/* How to Play */}
@@ -158,17 +182,6 @@ export default async function CoinPage({ params }: PageProps) {
               <li><span className="font-semibold text-[#1e3b2a]">Bonus points.</span> Add a story and/or photo when you claim to earn extra points. Make it good.</li>
             </ul>
             <p className="text-xs italic text-gray-500">Scan to claim. Trade boldly. Sneak cleverly. Brag responsibly.</p>
-            <div className="flex flex-wrap gap-2 pt-1">
-              <a href="/" className="inline-flex items-center gap-1 text-xs font-semibold text-[#1e3b2a] bg-[#1e3b2a]/10 hover:bg-[#1e3b2a]/20 px-3 py-1.5 rounded-full transition-colors">
-                📊 Stats &amp; Leaderboard
-              </a>
-              <a href="/constitution-mobile.html" className="inline-flex items-center gap-1 text-xs font-semibold text-[#1e3b2a] bg-[#1e3b2a]/10 hover:bg-[#1e3b2a]/20 px-3 py-1.5 rounded-full transition-colors">
-                📜 The Constitution
-              </a>
-              <a href="/photos" className="inline-flex items-center gap-1 text-xs font-semibold text-[#1e3b2a] bg-[#1e3b2a]/10 hover:bg-[#1e3b2a]/20 px-3 py-1.5 rounded-full transition-colors">
-                📸 Photo Album
-              </a>
-            </div>
           </div>
         </details>
 
