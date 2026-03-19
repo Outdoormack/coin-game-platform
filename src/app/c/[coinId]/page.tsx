@@ -23,7 +23,7 @@ const EFFECT_DISPLAY: Record<string, { icon: string; label: string }> = {
   magnet: { icon: '🧲', label: 'Magnet' },
   bounty_hunter: { icon: '🎯', label: 'Bounty Hunter' },
   mirror: { icon: '🪞', label: 'Mirror' },
-  rust: { icon: '🔧', label: 'Rust Restorer' },
+  rust: { icon: '🛡️', label: 'Rust-Proof' },
 };
 
 const STATUS_DISPLAY: Record<string, { icon: string; label: string; color: string }> = {

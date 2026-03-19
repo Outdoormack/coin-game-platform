@@ -88,8 +88,8 @@ const EFFECT_INFO: Record<string, Badge | null> = {
     description: "This coin copies the rarity of the last coin you claimed. Just grabbed a Legendary? This one is too.",
   },
   rust: {
-    icon: '🔧',
-    label: 'Rust Restorer',
+    icon: '🛡️',
+    label: 'Rust-Proof',
     color: 'text-gray-700',
     description: "This coin is immune to rusting. It can never decay, no matter how long it sits. A rare perk in a world of chaos.",
   },

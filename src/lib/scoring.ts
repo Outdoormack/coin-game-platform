@@ -21,7 +21,7 @@ const EFFECT_ICONS: Record<string, string> = {
   magnet: '🧲',
   bounty_hunter: '🎯',
   mirror: '🪞',
-  rust: '🔧',
+  rust: '🛡️',
 };
 
 const EFFECT_NAMES: Record<string, string> = {
@@ -34,7 +34,7 @@ const EFFECT_NAMES: Record<string, string> = {
   magnet: 'Magnet',
   bounty_hunter: 'Bounty Hunter',
   mirror: 'Mirror',
-  rust: 'Rust Restorer',
+  rust: 'Rust-Proof',
 };
 
 export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
@@ -129,7 +129,7 @@ export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
     case 'rust':
       // Rust Restorer coins are immune to rusting — no special scoring effect needed.
       // The restore bonus for claiming ANY rusted coin is handled below.
-      messages.push(`${EFFECT_ICONS.rust} Rust Restorer: This coin is immune to rusting`);
+      messages.push(`${EFFECT_ICONS.rust} Rust-Proof: This coin is immune to rusting`);
       break;
 
     default:
