@@ -36,6 +36,7 @@ export default function Home() {
   const [emailInput, setEmailInput] = useState('');
   const [emailSaving, setEmailSaving] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
+  const [isOwnProfile, setIsOwnProfile] = useState(false);
 
   // Restore last player from localStorage
   useEffect(() => {
@@ -53,14 +54,18 @@ export default function Home() {
     setNotFound(false);
     setPlayer(null);
     try {
-      const res = await fetch(`/api/player?name=${encodeURIComponent(name.trim())}`);
+      const savedName = localStorage.getItem('playerName');
+      const isSelf = savedName && savedName.toLowerCase() === name.trim().toLowerCase();
+      const res = await fetch(`/api/player?name=${encodeURIComponent(name.trim())}${isSelf ? '&self=1' : ''}`);
       const data = await res.json();
       if (data.ok) {
         setPlayer(data.player);
         setBadges(data.badges || []);
-        setEmailInput(data.player.email || '');
+        const savedName = localStorage.getItem('playerName');
+        const viewingOwn = !!(savedName && savedName.toLowerCase() === name.trim().toLowerCase());
+        setIsOwnProfile(viewingOwn);
+        setEmailInput(viewingOwn ? (data.player.email || '') : '');
         setEmailSaved(false);
-        localStorage.setItem('playerName', name.trim());
       } else {
         setNotFound(true);
       }
@@ -177,29 +182,31 @@ export default function Home() {
                 </div>
               )}
 
-              {/* Theft alerts email */}
-              <div className="pt-2 border-t border-[#c9c2ae]">
-                <p className="text-xs font-bold text-[#1e3b2a] mb-1">🗡️ Theft Alerts</p>
-                <p className="text-[11px] text-gray-500 mb-2">
-                  For classified alerts regarding crimes against your holdings. (Optional)
-                </p>
-                <form onSubmit={saveEmail} className="flex gap-2">
-                  <input
-                    type="email"
-                    value={emailInput}
-                    onChange={e => { setEmailInput(e.target.value); setEmailSaved(false); }}
-                    placeholder="your@email.com"
-                    className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2f6f4f]"
-                  />
-                  <button
-                    type="submit"
-                    disabled={emailSaving}
-                    className="px-3 py-2 rounded-lg bg-[#1e3b2a] text-white text-xs font-bold hover:bg-[#254b37] disabled:opacity-50 transition-colors"
-                  >
-                    {emailSaving ? '…' : emailSaved ? '✓ Saved' : 'Save'}
-                  </button>
-                </form>
-              </div>
+              {/* Theft alerts email — only shown for your own profile */}
+              {isOwnProfile && (
+                <div className="pt-2 border-t border-[#c9c2ae]">
+                  <p className="text-xs font-bold text-[#1e3b2a] mb-1">🗡️ Theft Alerts</p>
+                  <p className="text-[11px] text-gray-500 mb-2">
+                    For classified alerts regarding crimes against your holdings. (Optional)
+                  </p>
+                  <form onSubmit={saveEmail} className="flex gap-2">
+                    <input
+                      type="email"
+                      value={emailInput}
+                      onChange={e => { setEmailInput(e.target.value); setEmailSaved(false); }}
+                      placeholder="your@email.com"
+                      className="flex-1 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2f6f4f]"
+                    />
+                    <button
+                      type="submit"
+                      disabled={emailSaving}
+                      className="px-3 py-2 rounded-lg bg-[#1e3b2a] text-white text-xs font-bold hover:bg-[#254b37] disabled:opacity-50 transition-colors"
+                    >
+                      {emailSaving ? '…' : emailSaved ? '✓ Saved' : 'Save'}
+                    </button>
+                  </form>
+                </div>
+              )}
             </div>
           )}
         </div>

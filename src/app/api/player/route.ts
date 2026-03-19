@@ -60,6 +60,10 @@ export async function GET(request: NextRequest) {
     .eq('player_id', player.id)
     .order('earned_at', { ascending: false });
 
+  // Only include email if the request hints it's the player themselves
+  // (client sends ?self=1 when the name matches localStorage)
+  const isSelf = request.nextUrl.searchParams.get('self') === '1';
+
   return NextResponse.json({
     ok: true,
     player: {
@@ -76,7 +80,7 @@ export async function GET(request: NextRequest) {
       coins_discovered: player.coins_discovered,
       streak_weeks: player.streak_weeks,
       total_coins: totalCoins || 0,
-      email: player.email || null,
+      email: isSelf ? (player.email || null) : null,
     },
     badges: badges || [],
   });
