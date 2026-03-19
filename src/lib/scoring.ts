@@ -41,18 +41,6 @@ export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
   const messages: string[] = [];
   const bonusBreakdown: Record<string, number> = {};
 
-  // --- Reclaim: coin was stolen from you — restore holdings, no points ---
-  if (ctx.isReclaim) {
-    messages.push('🔄 Reclaim — coin restored to your holdings.');
-    messages.push('No points awarded. The Treasury keeps the balance.');
-    return {
-      base_points: 0, effect_points: 0, bonus_points: 0,
-      story_bonus: 0, streak_multiplier: 1, total_points: 0,
-      bonus_breakdown: {}, effect_name: 'Reclaim',
-      rarity: ctx.coin.rarity, messages,
-    };
-  }
-
   // --- Base points from rarity ---
   let basePoints = RARITY_POINTS[ctx.coin.rarity] || 1;
   messages.push(`Base (${ctx.coin.rarity}): ${basePoints} pt${basePoints !== 1 ? 's' : ''}`);
