@@ -43,7 +43,7 @@ const EFFECT_INFO: Record<string, Badge | null> = {
     icon: '🗡️',
     label: 'Thief',
     color: 'text-gray-700',
-    description: 'When you claim this coin, you get +1 point and the previous holder loses 1 point. Theft has consequences.',
+    description: 'When this coin is stolen, the thief gets +1 point and the previous holder loses 1 point. Earned claims are clean — no sting. The blade only cuts when stolen.',
   },
   shield: {
     icon: '🛡️',

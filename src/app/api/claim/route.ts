@@ -249,8 +249,8 @@ export async function POST(request: NextRequest) {
       }).eq('id', previousHolder.id);
     }
 
-    // --- Thief effect: deduct 1 point from previous holder ---
-    if (coin.current_effect === 'thief' && previousHolder) {
+    // --- Thief effect: deduct 1 point from previous holder (stolen claims only) ---
+    if (coin.current_effect === 'thief' && mode === 'stolen' && previousHolder) {
       await supabase.from('players').update({
         season_score: Math.max(0, (previousHolder.season_score || 0) - 1),
         lifetime_score: Math.max(0, (previousHolder.lifetime_score || 0) - 1),

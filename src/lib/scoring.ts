@@ -55,10 +55,13 @@ export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
       break;
 
     case 'thief':
-      // +1 to claimer, -1 from previous holder (deduction handled in claim API)
-      if (ctx.previousHolder) {
+      // On stolen claims: +1 to claimer, -1 from previous holder (deduction handled in claim API)
+      // On earned claims: no thief effect — clean handoff
+      if (ctx.mode === 'stolen' && ctx.previousHolder) {
         effectPoints = 1;
-        messages.push(`${EFFECT_ICONS.thief} Thief: +1 pt (stolen from ${ctx.previousHolder.display_name}, who loses 1 pt)`);
+        messages.push(`${EFFECT_ICONS.thief} Thief: +1 pt — and ${ctx.previousHolder.display_name} loses 1 pt`);
+      } else if (ctx.mode === 'earned') {
+        messages.push(`${EFFECT_ICONS.thief} Thief: No sting on earned claims. The blade only cuts when stolen.`);
       }
       break;
 
