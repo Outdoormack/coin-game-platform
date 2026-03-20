@@ -16,7 +16,7 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
   const [storyText, setStoryText] = useState('');
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
-  const [showExtras, setShowExtras] = useState(false);
+  const [showExtras, setShowExtras] = useState(true); // Open by default for launch
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<ClaimResponse | null>(null);
