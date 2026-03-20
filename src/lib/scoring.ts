@@ -224,7 +224,7 @@ export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
   // --- Calculate total ---
   const subtotal = basePoints + effectPoints + bonusPoints + storyBonus;
   const withStreaks = subtotal * streakMultiplier * underdogMultiplier;
-  const total = Math.max(0, Math.round(withStreaks * 100) / 100); // Floor at 0, round to 2 decimals
+  const total = Math.round(withStreaks * 100) / 100; // Allow negative (e.g. cursed coins)
 
   // --- Hot coin doubler ---
   let finalTotal = total;

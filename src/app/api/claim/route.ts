@@ -230,8 +230,8 @@ export async function POST(request: NextRequest) {
     const holdingsChange = mode === 'earned' ? 1 : 0;
 
     await supabase.from('players').update({
-      season_score: (player.season_score || 0) + score.total_points,
-      lifetime_score: (player.lifetime_score || 0) + score.total_points,
+      season_score: Math.max(0, (player.season_score || 0) + score.total_points),
+      lifetime_score: Math.max(0, (player.lifetime_score || 0) + score.total_points),
       xp: newXP,
       level: newLevel,
       title: newTitle,
