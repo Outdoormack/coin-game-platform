@@ -1,38 +1,11 @@
 import { supabase, DEFAULT_GROUP_ID } from '@/lib/supabase';
 import { Coin } from '@/lib/types';
 import ClaimForm from '@/components/ClaimForm';
+import CoinInfo from '@/components/CoinInfo';
 import Leaderboard from '@/components/Leaderboard';
 import RecentClaims from '@/components/RecentClaims';
-import BadgeRow from '@/components/BadgeRow';
 import InstallPrompt from '@/components/InstallPrompt';
 
-const RARITY_DISPLAY: Record<string, { label: string; stars: string; color: string }> = {
-  common: { label: 'Common', stars: '', color: 'text-gray-500' },
-  uncommon: { label: 'Uncommon', stars: '⭐', color: 'text-blue-600' },
-  rare: { label: 'Rare', stars: '⭐⭐', color: 'text-yellow-600' },
-  legendary: { label: 'Legendary', stars: '⭐⭐⭐', color: 'text-purple-600' },
-};
-
-const EFFECT_DISPLAY: Record<string, { icon: string; label: string }> = {
-  standard: { icon: '', label: '' },
-  thief: { icon: '🗡️', label: 'Thief' },
-  shield: { icon: '🛡️', label: 'Shield' },
-  wildcard: { icon: '🎲', label: 'Wildcard' },
-  cursed: { icon: '💀', label: 'Cursed' },
-  chain: { icon: '🔗', label: 'Chain' },
-  momentum: { icon: '⚡', label: 'Momentum' },
-  volatile: { icon: '💣', label: 'Volatile' },
-  gift: { icon: '🎁', label: 'Gift' },
-  rust: { icon: '🛡️', label: 'Rust-Proof' },
-};
-
-const STATUS_DISPLAY: Record<string, { icon: string; label: string; color: string }> = {
-  active: { icon: '', label: '', color: '' },
-  hot: { icon: '🔥', label: 'HOT', color: 'bg-red-100 text-red-700 border-red-300' },
-  frozen: { icon: '❄️', label: 'FROZEN', color: 'bg-blue-100 text-blue-700 border-blue-300' },
-  rusted: { icon: '🟤', label: 'RUSTED', color: 'bg-amber-100 text-amber-700 border-amber-300' },
-  bounty: { icon: '🎯', label: 'BOUNTY', color: 'bg-purple-100 text-purple-700 border-purple-300' },
-};
 
 interface PageProps {
   params: Promise<{ coinId: string }>;
@@ -82,9 +55,6 @@ export default async function CoinPage({ params }: PageProps) {
   }
 
   const typedCoin = coin as Coin & { current_holder: { display_name: string; title: string } | null };
-  const rarity = RARITY_DISPLAY[typedCoin.rarity] || RARITY_DISPLAY.common;
-  const effect = EFFECT_DISPLAY[typedCoin.current_effect] || EFFECT_DISPLAY.standard;
-  const status = STATUS_DISPLAY[typedCoin.status] || STATUS_DISPLAY.active;
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#2a332e] via-[#1d231f] to-[#151a17] p-4">
@@ -105,33 +75,16 @@ export default async function CoinPage({ params }: PageProps) {
             <h1 className="text-lg font-bold text-[#1e3b2a] tracking-wide">Third Space Treasury</h1>
           </div>
 
-          {/* Coin info */}
-          <div className="text-center space-y-2">
-            {typedCoin.heading && (
-              <h2 className="text-lg font-extrabold text-[#1e3b2a]">{typedCoin.heading}</h2>
-            )}
-            {typedCoin.message && (
-              <p className="text-sm text-gray-600 italic">{typedCoin.message}</p>
-            )}
-
-            {/* Rarity + Effect + Status badges — tappable with info popups */}
-            <BadgeRow
-              rarity={typedCoin.rarity}
-              effect={typedCoin.current_effect || 'standard'}
-              status={typedCoin.status}
-            />
-
-            {/* Current holder */}
-            {typedCoin.current_holder && (
-              <p className="text-sm text-gray-600">
-                Currently held by: <strong>{typedCoin.current_holder.display_name}</strong>
-                <span className="text-xs text-gray-400 ml-1">({typedCoin.current_holder.title})</span>
-              </p>
-            )}
-            {!typedCoin.current_holder && (
-              <p className="text-sm text-gray-500 italic">Unclaimed — be the first!</p>
-            )}
-          </div>
+          {/* Coin info — badges hidden until you're the holder */}
+          <CoinInfo
+            rarity={typedCoin.rarity}
+            effect={typedCoin.current_effect || 'standard'}
+            status={typedCoin.status}
+            heading={typedCoin.heading}
+            message={typedCoin.message}
+            currentHolderName={typedCoin.current_holder?.display_name || null}
+            currentHolderTitle={typedCoin.current_holder?.title || null}
+          />
 
           {/* Claim Form */}
           <div className="mt-4">
