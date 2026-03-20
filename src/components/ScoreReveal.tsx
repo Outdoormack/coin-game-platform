@@ -3,15 +3,22 @@
 import { useState, useEffect } from 'react';
 import { ScoreBreakdown } from '@/lib/types';
 
+interface NewBadge {
+  slug: string;
+  name: string;
+  icon: string | null;
+}
+
 interface Props {
   score: ScoreBreakdown;
   playerName: string;
   seasonRank: number;
   mode: 'earned' | 'stolen';
   previousHolderName: string | null;
+  newBadges?: NewBadge[];
 }
 
-export default function ScoreReveal({ score, playerName, seasonRank, mode, previousHolderName }: Props) {
+export default function ScoreReveal({ score, playerName, seasonRank, mode, previousHolderName, newBadges }: Props) {
   const [visibleLines, setVisibleLines] = useState(0);
   const [showTotal, setShowTotal] = useState(false);
 
@@ -89,6 +96,23 @@ export default function ScoreReveal({ score, playerName, seasonRank, mode, previ
           <p className="text-sm text-gray-600">
             Season rank: <strong className="text-[#1e3b2a]">#{seasonRank}</strong>
           </p>
+        </div>
+      )}
+
+      {/* New badges */}
+      {showTotal && newBadges && newBadges.length > 0 && (
+        <div className="bg-[#f7f3e6] rounded-xl border-2 border-[#c9c2ae] p-4 text-center space-y-2">
+          <p className="text-xs font-bold text-[#1e3b2a] uppercase tracking-wide">🏅 Badge{newBadges.length > 1 ? 's' : ''} Earned!</p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {newBadges.map(badge => (
+              <span
+                key={badge.slug}
+                className="inline-flex items-center gap-1.5 text-sm font-bold bg-white border border-[#c9c2ae] rounded-full px-3 py-1.5 text-[#1e3b2a]"
+              >
+                {badge.icon} {badge.name}
+              </span>
+            ))}
+          </div>
         </div>
       )}
 

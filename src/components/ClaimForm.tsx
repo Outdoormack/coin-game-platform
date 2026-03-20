@@ -133,6 +133,7 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
           seasonRank={result.seasonRank || 0}
           mode={mode!}
           previousHolderName={currentHolderName}
+          newBadges={result.newBadges}
         />
         <button
           onClick={() => window.location.reload()}

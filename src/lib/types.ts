@@ -184,7 +184,7 @@ export interface ClaimResponse {
   error?: string;
   message?: string;
   score?: ScoreBreakdown;
-  newBadges?: BadgeDefinition[];
+  newBadges?: { slug: string; name: string; icon: string | null }[];
   playerName?: string;
   seasonRank?: number;
 }

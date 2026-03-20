@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createAdminClient, DEFAULT_GROUP_ID } from '@/lib/supabase-admin';
 import { calculateScore, calculateXP, titleFromXP, levelFromXP } from '@/lib/scoring';
 import { ClaimRequest, ClaimContext, Coin, Player } from '@/lib/types';
+import { checkBadges } from '@/lib/badges';
 import { Resend } from 'resend';
 
 export async function POST(request: NextRequest) {
@@ -360,13 +361,26 @@ export async function POST(request: NextRequest) {
 
     const seasonRank = (updatedPlayers || []).findIndex(p => p.id === player.id) + 1;
 
+    // --- Check for new badges ---
+    const newBadges = await checkBadges(supabase, {
+      playerId: player.id,
+      groupId: groupId,
+      totalClaims: (player.total_claims || 0) + 1,
+      totalSteals: (player.total_steals || 0) + (mode === 'stolen' ? 1 : 0),
+      coinsDiscovered: (player.coins_discovered || 0) + (isFirstDiscovery ? 1 : 0),
+      wasSteal: mode === 'stolen',
+      previousHolderRank,
+      hadStory: !!storyText?.trim(),
+      hadPhoto: !!photoUrl?.trim(),
+    });
+
     // --- Return response ---
     return NextResponse.json({
       ok: true,
       score,
       playerName: cleanName,
       seasonRank,
-      newBadges: [], // TODO: Implement badge checking
+      newBadges,
     });
 
   } catch (err) {
