@@ -41,9 +41,9 @@ export type CoinEffect =
   | 'wildcard'
   | 'cursed'
   | 'chain'
-  | 'magnet'
-  | 'bounty_hunter'
-  | 'mirror'
+  | 'momentum'
+  | 'volatile'
+  | 'gift'
   | 'rust';
 
 export interface Player {
@@ -160,8 +160,8 @@ export interface ClaimContext {
   streakWeeks: number;
   // Day context
   claimsToday: number;
-  // Last claim context (for mirror effect)
-  lastClaimRarity: string | null;
+  // Chain effect: unique holders this season
+  chainCount: number;
   // Revenge: claimer is stealing from someone who stole from them within 72h
   isRevenge: boolean;
 }

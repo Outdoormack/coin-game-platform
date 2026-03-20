@@ -20,9 +20,9 @@ const EFFECT_DISPLAY: Record<string, { icon: string; label: string }> = {
   wildcard: { icon: '🎲', label: 'Wildcard' },
   cursed: { icon: '💀', label: 'Cursed' },
   chain: { icon: '🔗', label: 'Chain' },
-  magnet: { icon: '🧲', label: 'Magnet' },
-  bounty_hunter: { icon: '🎯', label: 'Bounty Hunter' },
-  mirror: { icon: '🪞', label: 'Mirror' },
+  momentum: { icon: '⚡', label: 'Momentum' },
+  volatile: { icon: '💣', label: 'Volatile' },
+  gift: { icon: '🎁', label: 'Gift' },
   rust: { icon: '🛡️', label: 'Rust-Proof' },
 };
 

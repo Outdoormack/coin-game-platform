@@ -137,6 +137,20 @@ export async function POST(request: NextRequest) {
       .eq('status', 'active')
       .single();
 
+    // --- Chain effect: count unique holders this season ---
+    let chainCount = 0;
+    if (coin.current_effect === 'chain' && activeSeason?.id) {
+      const { data: chainClaims } = await supabase
+        .from('claims')
+        .select('player_id')
+        .eq('coin_id', coin.id)
+        .eq('season_id', activeSeason.id);
+      if (chainClaims) {
+        const uniqueHolders = new Set(chainClaims.map(c => c.player_id));
+        chainCount = uniqueHolders.size;
+      }
+    }
+
     // --- Build scoring context ---
     const context: ClaimContext = {
       coin: coin as Coin,
@@ -152,7 +166,7 @@ export async function POST(request: NextRequest) {
       totalActivePlayers: activePlayers.length,
       streakWeeks: player.streak_weeks || 0,
       claimsToday: claimsToday || 0,
-      lastClaimRarity: null,
+      chainCount,
       isRevenge,
     };
 
@@ -232,6 +246,22 @@ export async function POST(request: NextRequest) {
     if (previousHolder && mode === 'earned') {
       await supabase.from('players').update({
         current_holdings: Math.max(0, (previousHolder.current_holdings || 0) - 1),
+      }).eq('id', previousHolder.id);
+    }
+
+    // --- Thief effect: deduct 1 point from previous holder ---
+    if (coin.current_effect === 'thief' && previousHolder) {
+      await supabase.from('players').update({
+        season_score: Math.max(0, (previousHolder.season_score || 0) - 1),
+        lifetime_score: Math.max(0, (previousHolder.lifetime_score || 0) - 1),
+      }).eq('id', previousHolder.id);
+    }
+
+    // --- Gift effect: give full points to the previous holder too ---
+    if (coin.current_effect === 'gift' && mode === 'earned' && previousHolder) {
+      await supabase.from('players').update({
+        season_score: (previousHolder.season_score || 0) + score.total_points,
+        lifetime_score: (previousHolder.lifetime_score || 0) + score.total_points,
       }).eq('id', previousHolder.id);
     }
 

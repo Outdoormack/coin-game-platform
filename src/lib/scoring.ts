@@ -18,9 +18,9 @@ const EFFECT_ICONS: Record<string, string> = {
   wildcard: '🎲',
   cursed: '💀',
   chain: '🔗',
-  magnet: '🧲',
-  bounty_hunter: '🎯',
-  mirror: '🪞',
+  momentum: '⚡',
+  volatile: '💣',
+  gift: '🎁',
   rust: '🛡️',
 };
 
@@ -30,10 +30,10 @@ const EFFECT_NAMES: Record<string, string> = {
   shield: 'Shield',
   wildcard: 'Wildcard',
   cursed: 'Cursed',
-  chain: 'Chain Bonus',
-  magnet: 'Magnet',
-  bounty_hunter: 'Bounty Hunter',
-  mirror: 'Mirror',
+  chain: 'Chain',
+  momentum: 'Momentum',
+  volatile: 'Volatile',
+  gift: 'Gift',
   rust: 'Rust-Proof',
 };
 
@@ -55,9 +55,10 @@ export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
       break;
 
     case 'thief':
+      // +1 to claimer, -1 from previous holder (deduction handled in claim API)
       if (ctx.previousHolder) {
         effectPoints = 1;
-        messages.push(`${EFFECT_ICONS.thief} Thief: +1 pt (stolen from ${ctx.previousHolder.display_name})`);
+        messages.push(`${EFFECT_ICONS.thief} Thief: +1 pt (stolen from ${ctx.previousHolder.display_name}, who loses 1 pt)`);
       }
       break;
 
@@ -67,56 +68,65 @@ export function calculateScore(ctx: ClaimContext): ScoreBreakdown {
       messages.push(`${EFFECT_ICONS.shield} Shield: This coin is protected for 48 hours`);
       break;
 
-    case 'wildcard':
+    case 'wildcard': {
       // Random 1-6, replaces base points
       const roll = Math.floor(Math.random() * 6) + 1;
       effectPoints = roll - basePoints; // Adjust so base + effect = roll
       messages.push(`${EFFECT_ICONS.wildcard} Wildcard roll: ${roll} pts (replaced base)`);
       break;
+    }
 
     case 'cursed':
-      // Worth 0 to you. Next person gets 3x.
-      effectPoints = -basePoints; // Zeroes out the base
-      messages.push(`${EFFECT_ICONS.cursed} Cursed! 0 pts for you — but the next person gets 3×`);
+      // Costs the claimer 2 points — a weapon to dump on rivals
+      effectPoints = -(basePoints + 2); // Zeroes out base, then takes 2 more
+      messages.push(`${EFFECT_ICONS.cursed} Cursed! −2 pts. Pass this coin to your enemies.`);
       break;
 
     case 'chain':
-      // +1 per unique claimant this season (stored on coin, passed via context)
-      // For MVP, we'll calculate this from claim history
-      // TODO: Pass chain count through context
-      effectPoints = 1; // Placeholder — will be calculated from claim history
-      messages.push(`${EFFECT_ICONS.chain} Chain Bonus: +1 pt (coin has been circulating)`);
-      break;
-
-    case 'magnet':
-      // Next claim within 24h is doubled. No immediate point change.
-      // The magnet effect is tracked and applied on the NEXT claim.
-      // TODO: Track magnet status on player
-      messages.push(`${EFFECT_ICONS.magnet} Magnet: Your next claim within 24h is worth double!`);
-      break;
-
-    case 'bounty_hunter':
-      if (ctx.previousHolder && ctx.previousHolderRank <= 3) {
-        effectPoints = 3;
-        messages.push(`${EFFECT_ICONS.bounty_hunter} Bounty Hunter: +3 pts (previous holder was top 3!)`);
+      // +1 per unique holder this season (passed via context)
+      effectPoints = ctx.chainCount || 0;
+      if (effectPoints > 0) {
+        messages.push(`${EFFECT_ICONS.chain} Chain: +${effectPoints} pt${effectPoints !== 1 ? 's' : ''} (${effectPoints} unique holder${effectPoints !== 1 ? 's' : ''} this season)`);
       } else {
-        messages.push(`${EFFECT_ICONS.bounty_hunter} Bounty Hunter: No bonus (previous holder wasn't top 3)`);
+        messages.push(`${EFFECT_ICONS.chain} Chain: First holder this season — keep it moving!`);
       }
       break;
 
-    case 'mirror':
-      if (ctx.lastClaimRarity && ctx.lastClaimRarity !== ctx.coin.rarity) {
-        const mirrorPoints = RARITY_POINTS[ctx.lastClaimRarity] || 1;
-        effectPoints = mirrorPoints - basePoints;
-        messages.push(`${EFFECT_ICONS.mirror} Mirror: Copied ${ctx.lastClaimRarity} rarity (${mirrorPoints} pts)`);
+    case 'momentum':
+      // Double points if this coin was claimed within the last 24h
+      if (ctx.coin.last_claimed_at) {
+        const hoursSinceLastClaim = (Date.now() - new Date(ctx.coin.last_claimed_at).getTime()) / (1000 * 60 * 60);
+        if (hoursSinceLastClaim <= 24) {
+          // Double the base points via effect
+          effectPoints = basePoints; // base + effect = 2× base
+          messages.push(`${EFFECT_ICONS.momentum} Momentum! Double points — claimed within 24h of last claim`);
+        } else {
+          messages.push(`${EFFECT_ICONS.momentum} Momentum: No bonus (last claimed ${Math.floor(hoursSinceLastClaim)}h ago)`);
+        }
       } else {
-        messages.push(`${EFFECT_ICONS.mirror} Mirror: No change (same rarity as last claim)`);
+        messages.push(`${EFFECT_ICONS.momentum} Momentum: First claim — keep it moving for double next time!`);
+      }
+      break;
+
+    case 'volatile':
+      // Double points now, but -5 if held at season end (season end penalty handled separately)
+      effectPoints = basePoints; // base + effect = 2× base
+      messages.push(`${EFFECT_ICONS.volatile} Volatile! Double points — but −5 if you're holding this at season end`);
+      break;
+
+    case 'gift':
+      // On earned claims, both giver and receiver get full points (giver credit handled in claim API)
+      if (ctx.mode === 'earned' && ctx.previousHolder) {
+        messages.push(`${EFFECT_ICONS.gift} Gift! Both you and ${ctx.previousHolder.display_name} earn full points`);
+      } else if (ctx.mode === 'stolen') {
+        messages.push(`${EFFECT_ICONS.gift} Gift: No gift bonus on stolen claims — gifts reward generosity`);
+      } else {
+        messages.push(`${EFFECT_ICONS.gift} Gift: Pass this coin to someone for a shared reward`);
       }
       break;
 
     case 'rust':
-      // Rust Restorer coins are immune to rusting — no special scoring effect needed.
-      // The restore bonus for claiming ANY rusted coin is handled below.
+      // Rust-Proof coins are immune to rusting — no scoring effect
       messages.push(`${EFFECT_ICONS.rust} Rust-Proof: This coin is immune to rusting`);
       break;
 

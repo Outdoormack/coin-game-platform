@@ -43,7 +43,7 @@ const EFFECT_INFO: Record<string, Badge | null> = {
     icon: '🗡️',
     label: 'Thief',
     color: 'text-gray-700',
-    description: 'When you claim this coin, you steal 1 point from the previous holder. They lose it, you gain it on top of the base value.',
+    description: 'When you claim this coin, you get +1 point and the previous holder loses 1 point. Theft has consequences.',
   },
   shield: {
     icon: '🛡️',
@@ -61,31 +61,31 @@ const EFFECT_INFO: Record<string, Badge | null> = {
     icon: '💀',
     label: 'Cursed',
     color: 'text-gray-700',
-    description: "Worth 0 points to you. BUT the next person who claims it gets triple the base value. Hot potato — pass it along.",
+    description: "This coin costs you 2 points every time it's claimed. A weapon — pass it to your rivals and watch them suffer.",
   },
   chain: {
     icon: '🔗',
     label: 'Chain',
     color: 'text-gray-700',
-    description: 'Earns +1 bonus point for every unique person who has ever claimed this coin in the current season. The more it circulates, the more it\'s worth.',
+    description: 'Earns +1 bonus point for every unique person who has claimed this coin in the current season. The more it circulates, the more it\'s worth.',
   },
-  magnet: {
-    icon: '🧲',
-    label: 'Magnet',
+  momentum: {
+    icon: '⚡',
+    label: 'Momentum',
     color: 'text-gray-700',
-    description: 'Your next claim (any coin) within 24 hours is worth double. Claim this, then move fast.',
+    description: 'If this coin was claimed within the last 24 hours, it\'s worth double points. Keep it moving fast.',
   },
-  bounty_hunter: {
-    icon: '🎯',
-    label: 'Bounty Hunter',
+  volatile: {
+    icon: '💣',
+    label: 'Volatile',
     color: 'text-gray-700',
-    description: 'If the previous holder is in the top 3 on the leaderboard, you get an extra +3 bonus. Hunt the leaders.',
+    description: 'Worth double points on every claim. But if you\'re holding this coin when the season ends, you lose 5 points. Tick tock.',
   },
-  mirror: {
-    icon: '🪞',
-    label: 'Mirror',
+  gift: {
+    icon: '🎁',
+    label: 'Gift',
     color: 'text-gray-700',
-    description: "This coin copies the rarity of the last coin you claimed. Just grabbed a Legendary? This one is too.",
+    description: 'When this coin is earned (not stolen), both the giver and the receiver get full points. Generosity pays.',
   },
   rust: {
     icon: '🛡️',
