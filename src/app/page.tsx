@@ -211,6 +211,22 @@ export default function Home() {
           )}
         </div>
 
+        {/* ── NAV BUTTONS ── */}
+        <div className="grid grid-cols-2 gap-2">
+          <a
+            href="/constitution-mobile.html"
+            className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl border-2 border-[#c9c2ae] bg-white/[0.92] text-sm font-bold text-[#1e3b2a] hover:bg-[#f7f3e6] transition-colors shadow-lg"
+          >
+            📜 The Constitution
+          </a>
+          <a
+            href="/photos"
+            className="flex items-center justify-center gap-1.5 py-2.5 rounded-xl border-2 border-[#c9c2ae] bg-white/[0.92] text-sm font-bold text-[#1e3b2a] hover:bg-[#f7f3e6] transition-colors shadow-lg"
+          >
+            📸 Photo Album
+          </a>
+        </div>
+
         {/* ── LEADERBOARD ── */}
         <div className="bg-white/[0.92] rounded-xl border border-[#c9c2ae] p-5 shadow-lg">
           <h2 className="text-sm font-extrabold text-[#1e3b2a] mb-3 uppercase tracking-wide">Leaderboard</h2>
