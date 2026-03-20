@@ -317,7 +317,7 @@ export async function POST(request: NextRequest) {
 
               <p style="color: #aaa; font-size: 11px; text-align: center; margin: 24px 0 0;">
                 You're receiving this because you have theft alerts enabled.<br/>
-                Manage your preferences at <a href="https://third-space-treasury.com" style="color: #aaa;">third-space-treasury.com</a>
+                To change or remove your email, visit <a href="https://third-space-treasury.com" style="color: #aaa;">third-space-treasury.com</a> and check your stats.
               </p>
             </div>
           `,
