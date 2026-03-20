@@ -88,7 +88,7 @@ const EFFECT_INFO: Record<string, Badge | null> = {
     description: 'When this coin is earned (not stolen), both the giver and the receiver get full points. Generosity pays.',
   },
   rust: {
-    icon: '🛡️',
+    icon: '💎',
     label: 'Rust-Proof',
     color: 'text-gray-700',
     description: "This coin is immune to rusting. It can never decay, no matter how long it sits. A rare perk in a world of chaos.",

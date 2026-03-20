@@ -21,7 +21,7 @@ const EFFECT_ICONS: Record<string, string> = {
   momentum: '⚡',
   volatile: '💣',
   gift: '🎁',
-  rust: '🛡️',
+  rust: '💎',
 };
 
 const EFFECT_NAMES: Record<string, string> = {
