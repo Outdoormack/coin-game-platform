@@ -17,16 +17,21 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [showExtras, setShowExtras] = useState(true); // Open by default for launch
+  const [isFirstTimer, setIsFirstTimer] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<ClaimResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Remember player name
+  // Remember player name + detect first-timer
   useEffect(() => {
     const saved = localStorage.getItem('playerName');
-    if (saved) setName(saved);
+    if (saved) {
+      setName(saved);
+    } else {
+      setIsFirstTimer(true);
+    }
   }, []);
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -263,6 +268,13 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
               className="hidden"
             />
           </div>
+        </div>
+      )}
+
+      {/* First-timer selfie nudge */}
+      {isFirstTimer && (
+        <div className="bg-[#f7f3e6] border border-[#c9c2ae] rounded-lg px-3 py-2.5 text-sm text-[#1e3b2a]">
+          📸 <strong>First claim?</strong> Take a selfie with your coin! We need all agents accounted for in the photo album. Don&apos;t be the one missing!
         </div>
       )}
 
