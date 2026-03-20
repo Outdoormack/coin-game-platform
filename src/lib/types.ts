@@ -61,6 +61,7 @@ export interface Player {
   total_claims: number;
   total_steals: number;
   streak_weeks: number;
+  streak_last_active: string | null;
   coins_discovered: number;
   joined_at: string;
   last_active_at: string | null;
