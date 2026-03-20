@@ -274,11 +274,13 @@ export async function POST(request: NextRequest) {
         const stolenAt = new Date();
         const stolenAtStr = stolenAt.toLocaleTimeString('en-US', {
           hour: 'numeric', minute: '2-digit',
+          timeZone: 'America/Denver',
         });
         const revengeDeadline = new Date(Date.now() + 72 * 60 * 60 * 1000);
         const deadlineStr = revengeDeadline.toLocaleDateString('en-US', {
           weekday: 'short', month: 'short', day: 'numeric',
           hour: 'numeric', minute: '2-digit',
+          timeZone: 'America/Denver',
         });
 
         await resend.emails.send({
