@@ -289,7 +289,7 @@ export async function POST(request: NextRequest) {
           html: `
             <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; background: #f5efe4; padding: 32px; border-radius: 12px; border: 1px solid #c9c2ae;">
               <div style="text-align: center; margin-bottom: 24px;">
-                <img src="https://coingameplatform.vercel.app/logo.jpg" alt="Third Space Treasury" style="width: 64px; height: 64px; object-fit: contain;" />
+                <img src="https://third-space-treasury.com/logo.jpg" alt="Third Space Treasury" style="width: 64px; height: 64px; object-fit: contain;" />
                 <h2 style="color: #1e3b2a; font-size: 18px; margin: 8px 0 4px;">Third Space Treasury</h2>
                 <p style="color: #888; font-size: 12px; font-style: italic; margin: 0;">In Chaos We Compete. In Coin We Trust.</p>
               </div>
@@ -307,7 +307,7 @@ export async function POST(request: NextRequest) {
               </div>
 
               <div style="text-align: center;">
-                <a href="https://coingameplatform.vercel.app"
+                <a href="https://third-space-treasury.com"
                    style="display: inline-block; background: #1e3b2a; color: #f7f3e6; text-decoration: none; padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: bold;">
                   Check the Leaderboard
                 </a>
@@ -315,7 +315,7 @@ export async function POST(request: NextRequest) {
 
               <p style="color: #aaa; font-size: 11px; text-align: center; margin: 24px 0 0;">
                 You're receiving this because you have theft alerts enabled.<br/>
-                Manage your preferences at <a href="https://coingameplatform.vercel.app" style="color: #aaa;">coingameplatform.vercel.app</a>
+                Manage your preferences at <a href="https://third-space-treasury.com" style="color: #aaa;">third-space-treasury.com</a>
               </p>
             </div>
           `,
