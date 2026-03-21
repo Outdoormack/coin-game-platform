@@ -60,12 +60,18 @@ export default function ClaimForm({ coinExternalId, currentHolderName }: Props) 
   };
 
   const uploadPhoto = async (file: File): Promise<string> => {
-    const ext = file.name.split('.').pop() || 'jpg';
+    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
     const path = `${coinExternalId}/${Date.now()}.${ext}`;
+    // Some browsers (e.g. Ecosia) don't set file.type correctly — fall back based on extension
+    const mimeMap: Record<string, string> = {
+      jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png',
+      gif: 'image/gif', webp: 'image/webp', heic: 'image/heic',
+    };
+    const contentType = file.type || mimeMap[ext] || 'image/jpeg';
 
     const { error: uploadError } = await supabase.storage
       .from('coin-photos')
-      .upload(path, file, { contentType: file.type, upsert: false });
+      .upload(path, file, { contentType, upsert: false });
 
     if (uploadError) throw new Error(uploadError.message);
 
