@@ -117,7 +117,7 @@ export default function Home() {
 
         {/* ── PLAYER STATS ── */}
         <div className="bg-white/[0.92] rounded-xl border border-[#c9c2ae] p-5 shadow-lg">
-          <h2 className="text-sm font-extrabold text-[#1e3b2a] mb-3 uppercase tracking-wide">Check My Stats</h2>
+          <h2 className="text-sm font-extrabold text-[#1e3b2a] mb-3 uppercase tracking-wide">Check Player Stats</h2>
 
           <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
             <input
