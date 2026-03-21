@@ -1,3 +1,5 @@
+import InstallPrompt from '@/components/InstallPrompt';
+
 export default function UpgradedPage() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#1e3b2a] to-[#0f1f15] flex items-center justify-center p-4">
@@ -93,6 +95,8 @@ export default function UpgradedPage() {
         </div>
 
       </div>
+
+      <InstallPrompt />
     </main>
   );
 }
