@@ -14,20 +14,28 @@ export default function InstallPrompt() {
   const [isIOS, setIsIOS] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
+  const [isInAppBrowser, setIsInAppBrowser] = useState(false);
+
   useEffect(() => {
     // Already installed as standalone — don't show
     if (window.matchMedia('(display-mode: standalone)').matches) return;
     // User already dismissed — don't show
     if (localStorage.getItem(DISMISSED_KEY)) return;
 
+    const ua = navigator.userAgent;
     const ios =
-      /iphone|ipad|ipod/i.test(navigator.userAgent) &&
+      /iphone|ipad|ipod/i.test(ua) &&
       !(window as unknown as Record<string, unknown>).MSStream;
 
-    setIsIOS(ios);
+    // Detect in-app browsers (WhatsApp, Instagram, Facebook, etc.)
+    const inApp = /FBAN|FBAV|Instagram|WhatsApp|Line|Snapchat/i.test(ua) ||
+      (ios && !/Safari/i.test(ua));
 
-    if (ios) {
-      // iOS Safari: no install API — show manual instructions after delay
+    setIsIOS(ios);
+    setIsInAppBrowser(inApp);
+
+    if (ios || inApp) {
+      // Show install instructions after delay
       const t = setTimeout(() => setShow(true), 3000);
       return () => clearTimeout(t);
     } else {
@@ -70,7 +78,12 @@ export default function InstallPrompt() {
         <div className="flex-1 min-w-0">
           <p className="text-sm font-bold leading-tight">Add to Home Screen</p>
 
-          {isIOS ? (
+          {isInAppBrowser ? (
+            <p className="text-xs text-[#c8d8c8] mt-1 leading-snug">
+              Tap <strong className="text-[#f7f3e6]">⋯</strong> or{' '}
+              <strong className="text-[#f7f3e6]">Open in Safari</strong> first, then add to your Home Screen for quick access.
+            </p>
+          ) : isIOS ? (
             <p className="text-xs text-[#c8d8c8] mt-1 leading-snug">
               Tap the <strong className="text-[#f7f3e6]">Share</strong> button{' '}
               <span className="inline-block">⬆️</span> then{' '}
@@ -96,7 +109,7 @@ export default function InstallPrompt() {
               onClick={dismiss}
               className="text-[#c8d8c8] text-xs px-3 py-1.5 rounded-full hover:text-white transition-colors"
             >
-              {isIOS ? 'Got it' : 'Not now'}
+              {isIOS || isInAppBrowser ? 'Got it' : 'Not now'}
             </button>
           </div>
         </div>
