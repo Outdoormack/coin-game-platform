@@ -25,7 +25,6 @@
       background: #f5efe4;
     }
 
-    /* ── COVER HEADER ── */
     .cover-header {
       display: flex;
       align-items: flex-start;
@@ -72,7 +71,6 @@
       letter-spacing: 0.02em;
     }
 
-    /* ── PREAMBLE ── */
     .preamble {
       font-style: italic;
       font-size: 13pt;
@@ -84,7 +82,6 @@
       border-radius: 0 6px 6px 0;
     }
 
-    /* ── SECTION HEADERS ── */
     h2 {
       font-family: 'Playfair Display', serif;
       font-size: 18pt;
@@ -108,7 +105,6 @@
       margin-bottom: 14px;
     }
 
-    /* ── REWARD TABLE ── */
     .reward-list {
       width: 100%;
       border-collapse: collapse;
@@ -160,7 +156,6 @@
       white-space: nowrap;
     }
 
-    /* ── CALLOUT BOXES ── */
     .callout {
       background: rgba(30, 59, 42, 0.06);
       border: 1px solid rgba(30, 59, 42, 0.2);
@@ -184,7 +179,6 @@
       font-size: 12.5pt;
     }
 
-    /* ── NUMBERED LIST ── */
     ol.procedure {
       padding-left: 24px;
       margin: 12px 0 20px;
@@ -195,7 +189,6 @@
       font-size: 12.5pt;
     }
 
-    /* ── FOOTER ── */
     .footer {
       margin-top: 56px;
       padding-top: 18px;
@@ -231,30 +224,30 @@
   </div>
 
   <div class="doc-meta">
-    Issued by the Treasury · Effective Immediately · Subject to Amendment by Popular Chaos
+    Issued by the Treasury · v2 · Subject to Amendment by Popular Chaos
   </div>
 
   <!-- PREAMBLE -->
   <div class="preamble">
-    The Treasury recognizes that its citizens gather, from time to time, to engage in recreational competition of the tabletop variety. Whereupon such gatherings occur, coins shall not merely observe — they shall participate. These House Rules govern the conduct of Treasury coins at official Game Nights and establish the procedures by which coins are wagered, awarded, and stolen in the course of said festivities.
+    The Treasury recognizes that its citizens gather, from time to time, to engage in recreational competition of the tabletop variety. Whereupon such gatherings occur, coins shall not merely observe — they shall participate. These House Rules govern the conduct of Treasury coins at official Game Nights and establish the procedures by which coins are wagered, scanned, and awarded in the course of said festivities.
   </div>
 
   <!-- SECTION 1 -->
-  <h2>§ 1 — The Ante</h2>
+  <h2>§ 1 — The Ante &amp; The Mystery Pot</h2>
 
-  <p>At the commencement of each official Game Night, every attending citizen shall contribute one (1) coin to <strong>The Pot</strong> — a central collection of unclaimed coins visible to all players.</p>
+  <p>At the commencement of each official Game Night, every attending citizen shall contribute one (1) coin to <strong>The Pot</strong> — a shared bowl of coins, shuffled and anonymous. No one knows whose coin is whose. No one knows what rarity or effect hides inside.</p>
 
-  <p>Pot coins are not yet claimed by anyone. They await their rightful owner, to be determined by the events of the evening.</p>
+  <p>The Pot is the engine of the night. It dispenses points, reveals secrets, and rewards the bold.</p>
 
   <div class="callout">
-    <div class="callout-title">The Pot</div>
-    <p>Pot coins sit in the center of the table, unclaimed. When a coin is awarded from the pot, the recipient scans it on the spot using the Treasury app. Any pot coins not awarded by the end of the night are subject to the Final Scramble (see § 5).</p>
+    <div class="callout-title">How The Pot Works</div>
+    <p>Pot coins are shuffled together so no one can identify individual coins. When a player earns a scan from the Pot, they reach in blind, scan the coin, and discover what they pulled — the rarity and effect are revealed on the spot. The physical coin goes back in the Pot. Points are yours. The mystery stays alive.</p>
   </div>
 
   <!-- SECTION 2 -->
-  <h2>§ 2 — Awards &amp; How to Earn Them</h2>
+  <h2>§ 2 — Awards &amp; Bonus Scans</h2>
 
-  <p>Throughout the evening, coins from The Pot are awarded for the following achievements. Each award is granted once per game round unless otherwise noted.</p>
+  <p>Throughout the evening, players earn <strong>bonus scans</strong> from the Pot for the following achievements. Each award is granted once per game round unless otherwise noted. Award winners scan a random coin from the Pot — points are recorded, but the physical coin stays in the bowl.</p>
 
   <table class="reward-list">
     <thead>
@@ -262,7 +255,7 @@
         <th class="emoji-col"></th>
         <th>Award</th>
         <th>Trigger</th>
-        <th>Coins</th>
+        <th>Reward</th>
       </tr>
     </thead>
     <tbody>
@@ -270,37 +263,31 @@
         <td class="emoji-col">🏆</td>
         <td><span class="award-name">Victor's Claim</span></td>
         <td>Win a game round outright</td>
-        <td>1 from the Pot</td>
+        <td>1 bonus scan</td>
       </tr>
       <tr>
         <td class="emoji-col">😂</td>
         <td><span class="award-name">Moment of the Night</span></td>
         <td>Group votes for the funniest, most chaotic, or most memorable moment of the round</td>
-        <td>1 from the Pot</td>
+        <td>1 bonus scan</td>
       </tr>
       <tr>
         <td class="emoji-col">🗡️</td>
         <td><span class="award-name">Best Betrayal</span></td>
-        <td><em>(Secret Hitler / social deduction only)</em> Group votes for the most devastating political move, bluff, or double-cross of the round</td>
-        <td>1 from the Pot</td>
+        <td><em>(Social deduction games only)</em> Group votes for the most devastating political move, bluff, or double-cross of the round</td>
+        <td>1 bonus scan</td>
       </tr>
       <tr>
         <td class="emoji-col">📡</td>
         <td><span class="award-name">Bullseye</span></td>
         <td><em>(Wavelength only)</em> Closest guess to the target in the round</td>
-        <td>1 from the Pot</td>
+        <td>1 bonus scan</td>
       </tr>
       <tr>
         <td class="emoji-col">😬</td>
         <td><span class="award-name">Consolation Prize</span></td>
-        <td>The player with the worst performance across a full game (last place, fewest points, eliminated first) receives one coin — from the Pot if available, or as a gesture of mercy from another player</td>
-        <td>1 from the Pot</td>
-      </tr>
-      <tr>
-        <td class="emoji-col">🔥</td>
-        <td><span class="award-name">Hot Streak</span></td>
-        <td>Win two consecutive game rounds in the same evening</td>
-        <td>1 stolen directly from any other player</td>
+        <td>Last place in a full game — fewest points, eliminated first, or most spectacularly defeated</td>
+        <td>1 bonus scan</td>
       </tr>
     </tbody>
   </table>
@@ -311,53 +298,51 @@
   </div>
 
   <!-- SECTION 3 -->
-  <h2>§ 3 — Claiming Your Award</h2>
+  <h2>§ 3 — Scanning a Pot Coin</h2>
 
-  <p>When a coin is awarded, the recipient claims it immediately using the Treasury app. Procedure is as follows:</p>
+  <p>When a player earns a bonus scan, they claim it immediately using the Treasury app:</p>
 
   <ol class="procedure">
+    <li>Reach into the Pot and pull a coin at random — no peeking, no choosing.</li>
     <li>Scan the NFC coin with your phone.</li>
-    <li>Enter your name (or confirm if already saved).</li>
-    <li>Select <strong>Earned</strong> (if from the Pot) or <strong>Stolen</strong> (if taken from another player).</li>
-    <li>Write a story. This is not optional. The chaos deserves documentation.</li>
-    <li>Take a photo if the moment demands it.</li>
+    <li>Discover what you pulled — rarity, effect, the whole reveal.</li>
+    <li>Select <strong>Earned</strong> as the claim type.</li>
+    <li>Write a story. The chaos deserves documentation.</li>
+    <li>Return the physical coin to the Pot.</li>
   </ol>
 
-  <p>Claims made at Game Night count toward all Treasury stats — season score, lifetime score, leaderboard rank, streaks, and badges — same as any other claim.</p>
+  <p>All Game Night scans count toward season score, lifetime score, leaderboard rank, streaks, and badges — same as any other claim.</p>
 
   <!-- SECTION 4 -->
-  <h2>§ 4 — The Hot Streak Rule</h2>
+  <h2>§ 4 — End of Night: The Coin Return</h2>
 
-  <p>Any player who wins two (2) consecutive game rounds in the same evening earns the right to steal one coin directly from any other player present — bypassing the Pot entirely.</p>
+  <p>At the conclusion of the evening, every player who anted a coin goes home with a coin. No one leaves empty-handed.</p>
 
-  <p>The targeted player <em>may</em> refuse the steal, but doing so forfeits <strong>5 points</strong> from their Treasury score, enforced on the honor system. Running from a Hot Streak is legal. It is also embarrassing.</p>
+  <p>The host decides the redistribution method:</p>
+
+  <p><strong>Option A — Random Draw.</strong> Pot coins are shuffled. Each player draws one coin blind. Simple, fast, and the mystery carries to the very end.</p>
+
+  <p><strong>Option B — Winner's Pick.</strong> Players who earned the most bonus scans during the night pick first from the Pot. Remaining players draw in any order. Ties are broken by the host or by rock-paper-scissors.</p>
+
+  <p>Either way, every citizen walks out with a coin in hand.</p>
 
   <!-- SECTION 5 -->
-  <h2>§ 5 — The Final Scramble</h2>
+  <h2>§ 5 — Story Requirements</h2>
 
-  <p>At the conclusion of the last game of the evening, any coins remaining in the Pot are placed in the center of the table. The host counts down from three (3). At zero, it is a free-for-all — any player may grab and scan any remaining pot coin. First to scan it, claims it.</p>
-
-  <p>There are no rules during the Final Scramble. Only winners and people who didn't move fast enough.</p>
-
-  <!-- SECTION 6 -->
-  <h2>§ 6 — Story Requirements</h2>
-
-  <p>Every coin claimed at a Game Night must include a story entry. The Treasury app will not stop you from skipping it — but your fellow citizens will know, and they will judge you accordingly.</p>
+  <p>Every coin scanned at a Game Night must include a story entry. The Treasury app will not stop you from skipping it — but your fellow citizens will know, and they will judge you accordingly.</p>
 
   <p>Stories should capture the moment: the round, the play, the chaos, the betrayal. Future leaderboard archaeologists deserve context. Write something worth reading.</p>
 
-  <!-- SECTION 7 -->
-  <h2>§ 7 — General Provisions</h2>
+  <!-- SECTION 6 -->
+  <h2>§ 6 — General Provisions</h2>
 
-  <p><strong>7.1 — Host Authority.</strong> The host of any Game Night holds final interpretive authority over these rules. If there is ambiguity, confusion, or dispute, the host decides. The host's ruling is final and non-appealable until the next Game Night, at which point nobody will remember anyway.</p>
+  <p><strong>6.1 — Host Authority.</strong> The host of any Game Night holds final interpretive authority over these rules. If there is ambiguity, confusion, or dispute, the host decides. The host's ruling is final and non-appealable until the next Game Night, at which point nobody will remember anyway.</p>
 
-  <p><strong>7.2 — No Coin, No Ante.</strong> Players who arrive without a coin in their possession may not participate in the Pot. They may still earn coins through Hot Streak steals or consolation awards at the host's discretion.</p>
+  <p><strong>6.2 — No Coin, No Ante.</strong> Players who arrive without a coin may not participate in the Pot or earn bonus scans. They may still play games and enjoy the evening — they just can't earn Treasury points that night.</p>
 
-  <p><strong>7.3 — Pot Shortfall.</strong> If the Pot runs dry before all awards have been distributed, remaining awards are fulfilled via player-to-player steals, with the target selected by group consensus.</p>
+  <p><strong>6.3 — Game Compatibility.</strong> These rules are designed to layer on top of any tabletop game without modifying that game's rules. If an award conflicts with ongoing gameplay, it is distributed at the next natural break.</p>
 
-  <p><strong>7.4 — Game Compatibility.</strong> These rules are designed to layer on top of any tabletop game without modifying that game's rules. If an award conflicts with ongoing gameplay, it is distributed at the next natural break.</p>
-
-  <p><strong>7.5 — Amendment.</strong> These rules may be amended at any time by majority vote of attending citizens. Amendments take effect at the next Game Night. Constitutional amendments require the same process as described in the Constitution of the Third Space Treasury.</p>
+  <p><strong>6.4 — Amendment.</strong> These rules may be amended at any time by majority vote of attending citizens. Amendments take effect at the next Game Night. Constitutional amendments require the same process as described in the Constitution of the Third Space Treasury.</p>
 
   <!-- FOOTER -->
   <div class="footer">

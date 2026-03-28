@@ -24,7 +24,6 @@
       padding: 28px 20px 48px;
     }
 
-    /* ── HEADER ── */
     .cover-header {
       text-align: center;
       padding-bottom: 20px;
@@ -61,7 +60,6 @@
       margin-top: 12px;
     }
 
-    /* ── PREAMBLE ── */
     .preamble {
       font-style: italic;
       font-size: 13.5px;
@@ -73,7 +71,6 @@
       border-radius: 0 6px 6px 0;
     }
 
-    /* ── SECTION HEADERS ── */
     h2 {
       font-family: 'Playfair Display', serif;
       font-size: 17px;
@@ -89,7 +86,6 @@
       margin-bottom: 12px;
     }
 
-    /* ── AWARD CARDS ── */
     .award-card {
       background: #fff8ee;
       border: 1px solid #d6cfc4;
@@ -134,7 +130,6 @@
       line-height: 1.5;
     }
 
-    /* ── CALLOUT ── */
     .callout {
       background: rgba(30, 59, 42, 0.06);
       border: 1px solid rgba(30, 59, 42, 0.2);
@@ -159,7 +154,6 @@
       color: #333;
     }
 
-    /* ── NUMBERED LIST ── */
     ol.procedure {
       padding-left: 22px;
       margin: 10px 0 16px;
@@ -170,7 +164,6 @@
       font-size: 14px;
     }
 
-    /* ── PROVISION ── */
     .provision {
       font-size: 13.5px;
       margin-bottom: 12px;
@@ -178,7 +171,6 @@
       border-left: 2px solid #d6cfc4;
     }
 
-    /* ── FOOTER ── */
     .footer {
       margin-top: 48px;
       padding-top: 16px;
@@ -204,7 +196,7 @@
     <div class="cover-title">Game Night<br/>House Rules</div>
     <div class="tagline">An Official Supplement to the Constitution of the Third Space Treasury</div>
   </div>
-  <div class="doc-meta">Issued by the Treasury · Effective Immediately · Subject to Amendment by Popular Chaos</div>
+  <div class="doc-meta">Issued by the Treasury · v2 · Subject to Amendment by Popular Chaos</div>
 
   <!-- PREAMBLE -->
   <div class="preamble">
@@ -212,22 +204,22 @@
   </div>
 
   <!-- SECTION 1 -->
-  <h2>§ 1 — The Ante</h2>
-  <p>At the start of each Game Night, every attending citizen contributes one (1) coin to <strong>The Pot</strong> — a central collection of unclaimed coins visible to all.</p>
+  <h2>§ 1 — The Ante &amp; The Mystery Pot</h2>
+  <p>At the start of each Game Night, every attending citizen contributes one (1) coin to <strong>The Pot</strong> — a shared bowl of coins, shuffled and anonymous. No one knows whose coin is whose. No one knows what rarity or effect hides inside.</p>
   <div class="callout">
-    <div class="callout-title">The Pot</div>
-    <p>Pot coins sit unclaimed in the center. When awarded, the recipient scans immediately. Pot coins not awarded by end of night go to the Final Scramble (§ 5).</p>
+    <div class="callout-title">How The Pot Works</div>
+    <p>Pot coins are shuffled together so no one can identify individual coins. When a player earns a scan, they reach in blind, scan the coin, and discover what they pulled. The physical coin goes back in the Pot. Points are yours. The mystery stays alive.</p>
   </div>
 
   <!-- SECTION 2 -->
-  <h2>§ 2 — Awards</h2>
-  <p>The following awards are granted throughout the evening — once per game round unless noted.</p>
+  <h2>§ 2 — Awards &amp; Bonus Scans</h2>
+  <p>Award winners earn a <strong>bonus scan</strong> from the Pot — pull a coin blind, scan it for points and a mystery reveal, then return it to the bowl.</p>
 
   <div class="award-card">
     <div class="award-header">
       <span class="award-emoji">🏆</span>
       <span class="award-name">Victor's Claim</span>
-      <span class="award-coins">1 from Pot</span>
+      <span class="award-coins">1 bonus scan</span>
     </div>
     <div class="award-trigger">Win a game round outright.</div>
   </div>
@@ -236,7 +228,7 @@
     <div class="award-header">
       <span class="award-emoji">😂</span>
       <span class="award-name">Moment of the Night</span>
-      <span class="award-coins">1 from Pot</span>
+      <span class="award-coins">1 bonus scan</span>
     </div>
     <div class="award-trigger">Group votes for the funniest, most chaotic, or most memorable moment of the round.</div>
   </div>
@@ -245,36 +237,27 @@
     <div class="award-header">
       <span class="award-emoji">🗡️</span>
       <span class="award-name">Best Betrayal</span>
-      <span class="award-coins">1 from Pot</span>
+      <span class="award-coins">1 bonus scan</span>
     </div>
-    <div class="award-trigger"><em>Social deduction games only.</em> Group votes for the most devastating bluff, play, or double-cross of the round.</div>
+    <div class="award-trigger"><em>Social deduction games only.</em> Group votes for the most devastating bluff, play, or double-cross.</div>
   </div>
 
   <div class="award-card">
     <div class="award-header">
       <span class="award-emoji">📡</span>
       <span class="award-name">Bullseye</span>
-      <span class="award-coins">1 from Pot</span>
+      <span class="award-coins">1 bonus scan</span>
     </div>
-    <div class="award-trigger"><em>Wavelength only.</em> Closest guess to the target in the round.</div>
+    <div class="award-trigger"><em>Wavelength only.</em> Closest guess to the target.</div>
   </div>
 
   <div class="award-card">
     <div class="award-header">
       <span class="award-emoji">😬</span>
       <span class="award-name">Consolation Prize</span>
-      <span class="award-coins">1 from Pot</span>
+      <span class="award-coins">1 bonus scan</span>
     </div>
-    <div class="award-trigger">Last place player receives a coin. Nobody goes home empty-handed. It is still embarrassing.</div>
-  </div>
-
-  <div class="award-card">
-    <div class="award-header">
-      <span class="award-emoji">🔥</span>
-      <span class="award-name">Hot Streak</span>
-      <span class="award-coins">Steal from player</span>
-    </div>
-    <div class="award-trigger">Win two consecutive rounds in the same evening. Steal one coin directly from any other player — bypassing the Pot.</div>
+    <div class="award-trigger">Last place in a full game. Nobody goes home without at least one scan. It is still embarrassing.</div>
   </div>
 
   <div class="callout">
@@ -283,38 +266,35 @@
   </div>
 
   <!-- SECTION 3 -->
-  <h2>§ 3 — Claiming Your Award</h2>
+  <h2>§ 3 — Scanning a Pot Coin</h2>
   <ol class="procedure">
+    <li>Reach into the Pot and pull a coin at random — no peeking.</li>
     <li>Scan the NFC coin with your phone.</li>
-    <li>Enter your name (or confirm if saved).</li>
-    <li>Select <strong>Earned</strong> (Pot coin) or <strong>Stolen</strong> (player steal).</li>
+    <li>Discover what you pulled — rarity, effect, the whole reveal.</li>
+    <li>Select <strong>Earned</strong> as the claim type.</li>
     <li>Write a story. The chaos deserves documentation.</li>
-    <li>Take a photo if the moment demands it.</li>
+    <li>Return the physical coin to the Pot.</li>
   </ol>
-  <p>All Game Night claims count toward season score, leaderboard rank, streaks, and badges.</p>
+  <p>All Game Night scans count toward season score, leaderboard rank, streaks, and badges.</p>
 
   <!-- SECTION 4 -->
-  <h2>§ 4 — The Hot Streak Rule</h2>
-  <p>Win two consecutive rounds and you may steal one coin directly from any player present. The target may refuse — but refusal costs <strong>5 points</strong> from their Treasury score, enforced on the honor system.</p>
-  <p>Running from a Hot Streak is legal. It is also embarrassing.</p>
+  <h2>§ 4 — End of Night: The Coin Return</h2>
+  <p>At the end of the evening, every player who anted a coin goes home with a coin. No one leaves empty-handed.</p>
+  <p>The host decides the method:</p>
+  <p><strong>Option A — Random Draw.</strong> Coins are shuffled. Each player draws one blind.</p>
+  <p><strong>Option B — Winner's Pick.</strong> Players with the most bonus scans pick first. Remaining players draw in any order. Ties broken by host or rock-paper-scissors.</p>
 
   <!-- SECTION 5 -->
-  <h2>§ 5 — The Final Scramble</h2>
-  <p>After the last game, remaining Pot coins go to the center. The host counts down from three. At zero — free-for-all. First to scan it, claims it.</p>
-  <p>There are no rules during the Final Scramble. Only winners and people who didn't move fast enough.</p>
+  <h2>§ 5 — Story Requirements</h2>
+  <p>Every Game Night scan must include a story. The app won't stop you from skipping it. Your fellow citizens will know.</p>
 
   <!-- SECTION 6 -->
-  <h2>§ 6 — Story Requirements</h2>
-  <p>Every Game Night claim must include a story. The app will not stop you from skipping it. Your fellow citizens will know.</p>
+  <h2>§ 6 — General Provisions</h2>
 
-  <!-- SECTION 7 -->
-  <h2>§ 7 — General Provisions</h2>
-
-  <div class="provision"><strong>7.1 Host Authority.</strong> The host holds final interpretive authority. All rulings are final until the next Game Night, at which point nobody will remember anyway.</div>
-  <div class="provision"><strong>7.2 No Coin, No Ante.</strong> Players without a coin may not participate in the Pot. Hot Streak steals and consolation awards remain available at host discretion.</div>
-  <div class="provision"><strong>7.3 Pot Shortfall.</strong> If the Pot runs dry, remaining awards are fulfilled via player-to-player steals by group consensus.</div>
-  <div class="provision"><strong>7.4 Game Compatibility.</strong> These rules layer on top of any tabletop game without modifying that game's rules. Awards distribute at the next natural break if timing conflicts.</div>
-  <div class="provision"><strong>7.5 Amendment.</strong> Rules may be amended by majority vote. Amendments take effect at the next Game Night.</div>
+  <div class="provision"><strong>6.1 Host Authority.</strong> The host holds final interpretive authority. All rulings are final until the next Game Night, at which point nobody will remember anyway.</div>
+  <div class="provision"><strong>6.2 No Coin, No Ante.</strong> Players without a coin may not participate in the Pot or earn bonus scans. They may still play games — they just can't earn Treasury points that night.</div>
+  <div class="provision"><strong>6.3 Game Compatibility.</strong> These rules layer on top of any tabletop game without modifying that game's rules. Awards distribute at the next natural break if timing conflicts.</div>
+  <div class="provision"><strong>6.4 Amendment.</strong> Rules may be amended by majority vote. Amendments take effect at the next Game Night.</div>
 
   <!-- FOOTER -->
   <div class="footer">
