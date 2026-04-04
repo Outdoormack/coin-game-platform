@@ -5,11 +5,13 @@ import PhotoLightbox from './PhotoLightbox';
 
 interface RecentClaim {
   id: string;
+  type?: 'claim' | 'rust';
   mode: string;
   total_points: number;
   coin_effect: string | null;
   coin_rarity: string | null;
   story_text: string | null;
+  rust_message: string | null;
   photo_url: string | null;
   claimed_at: string;
   player_name: string;
@@ -53,8 +55,9 @@ export default function RecentClaims() {
     {lightboxUrl && <PhotoLightbox url={lightboxUrl} onClose={() => setLightboxUrl(null)} />}
     <div className="max-h-64 overflow-y-auto space-y-0 divide-y divide-[#c9c2ae]/50">
       {claims.map(claim => {
-        const verb = claim.mode === 'stolen' ? 'stole' : 'claimed';
-        const icon = claim.mode === 'stolen' ? '🗡️' : '✅';
+        const isRust = claim.type === 'rust';
+        const verb = isRust ? '' : (claim.mode === 'stolen' ? 'stole' : 'claimed');
+        const icon = isRust ? '🟤' : (claim.mode === 'stolen' ? '🗡️' : '✅');
         const timeAgo = getTimeAgo(claim.claimed_at);
 
         return (
@@ -63,13 +66,22 @@ export default function RecentClaims() {
               <div className="flex-1 min-w-0">
                 <p className="text-xs">
                   <span className="mr-1">{icon}</span>
-                  <strong className="text-[#1e3b2a]">{claim.player_name}</strong>
-                  {' '}{verb} a coin
-                  {claim.previous_holder_name && claim.mode === 'stolen' && (
-                    <span className="text-gray-500"> from {claim.previous_holder_name}</span>
+                  {isRust ? (
+                    <>
+                      <strong className="text-[#8b6914]">{claim.player_name}</strong>
+                      {' '}{claim.rust_message}
+                    </>
+                  ) : (
+                    <>
+                      <strong className="text-[#1e3b2a]">{claim.player_name}</strong>
+                      {' '}{verb} a coin
+                      {claim.previous_holder_name && claim.mode === 'stolen' && (
+                        <span className="text-gray-500"> from {claim.previous_holder_name}</span>
+                      )}
+                    </>
                   )}
                 </p>
-                {claim.story_text && (
+                {!isRust && claim.story_text && (
                   <p className="text-xs text-gray-600 mt-0.5 italic truncate">
                     &ldquo;{claim.story_text}&rdquo;
                   </p>
@@ -85,8 +97,8 @@ export default function RecentClaims() {
                 )}
               </div>
               <div className="text-right shrink-0">
-                <span className="text-xs font-bold text-[#2f6f4f]">
-                  +{claim.total_points.toFixed(1)}
+                <span className={`text-xs font-bold ${isRust ? 'text-[#8b6914]' : 'text-[#2f6f4f]'}`}>
+                  {claim.total_points < 0 ? '' : '+'}{claim.total_points.toFixed(1)}
                 </span>
                 <p className="text-[10px] text-gray-400">{timeAgo}</p>
               </div>
