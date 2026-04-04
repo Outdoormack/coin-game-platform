@@ -113,7 +113,7 @@ const STATUS_INFO: Record<string, Badge | null> = {
     icon: '🟤',
     label: 'RUSTED',
     color: 'bg-amber-100 text-amber-700 border-amber-300',
-    description: "This coin sat idle for too long and rusted. The holder lost 1 point. Claim it to restore it and earn a +1 restore bonus.",
+    description: "This coin sat idle for 14 days and rusted. The holder lost 1 point. The next player to claim it will restore it and earn a +1 restore bonus.",
   },
   bounty: {
     icon: '🎯',
