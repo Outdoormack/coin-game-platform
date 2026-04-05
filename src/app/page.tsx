@@ -37,14 +37,20 @@ export default function Home() {
   const [emailSaving, setEmailSaving] = useState(false);
   const [emailSaved, setEmailSaved] = useState(false);
   const [isOwnProfile, setIsOwnProfile] = useState(false);
+  const [announcement, setAnnouncement] = useState<string | null>(null);
 
-  // Restore last player from localStorage
+  // Fetch announcement + restore last player from localStorage
   useEffect(() => {
     const saved = localStorage.getItem('playerName');
     if (saved) {
       setNameInput(saved);
       fetchPlayer(saved);
     }
+    // Fetch announcement banner
+    fetch('/api/announcement')
+      .then(res => res.json())
+      .then(data => { if (data.text) setAnnouncement(data.text); })
+      .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -114,6 +120,14 @@ export default function Home() {
           <h1 className="text-xl font-extrabold text-[#1e3b2a] tracking-wide">Third Space Treasury</h1>
           <p className="text-xs text-gray-500 mt-1 italic">In Chaos We Compete. In Coin We Trust.</p>
         </div>
+
+        {/* ── ANNOUNCEMENT BANNER ── */}
+        {announcement && (
+          <div className="bg-[#f7f3e6] border border-[#c9c2ae] rounded-xl px-4 py-3 flex items-start gap-3 shadow">
+            <span className="text-lg leading-none mt-0.5">📣</span>
+            <p className="text-sm font-medium text-[#1e3b2a] leading-snug">{announcement}</p>
+          </div>
+        )}
 
         {/* ── PLAYER STATS ── */}
         <div className="bg-white/[0.92] rounded-xl border border-[#c9c2ae] p-5 shadow-lg">
