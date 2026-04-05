@@ -58,13 +58,32 @@ export async function GET() {
       .select(`
         id,
         external_id,
-        rust_start,
-        current_holder:players!coins_current_holder_id_fkey(display_name)
+        rust_start
       `)
       .eq('group_id', groupId)
       .eq('status', 'rusted')
       .not('rust_start', 'is', null)
       .gte('rust_start', rustCutoff);
+
+    // For each rusted coin, find the physical holder (last earned claim)
+    const rustedWithHolders = await Promise.all(
+      (rustedCoins || []).map(async (coin) => {
+        const { data: lastEarned } = await supabase
+          .from('claims')
+          .select('player:players!claims_player_id_fkey(display_name)')
+          .eq('coin_id', coin.id)
+          .eq('mode', 'earned')
+          .order('claimed_at', { ascending: false })
+          .limit(1)
+          .single();
+
+        return {
+          ...coin,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          physical_holder_name: (lastEarned?.player as any)?.display_name || 'Someone',
+        };
+      })
+    );
 
     // Build claim entries
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -84,9 +103,8 @@ export async function GET() {
       coin_external_id: c.coin?.external_id || '',
     }));
 
-    // Build rust entries
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const rustEntries = (rustedCoins || []).map((c: any) => ({
+    // Build rust entries — attribute to the physical holder (last earned), not current_holder_id
+    const rustEntries = rustedWithHolders.map((c) => ({
       id: `rust-${c.id}`,
       type: 'rust' as const,
       mode: null,
@@ -96,7 +114,7 @@ export async function GET() {
       story_text: pickRustMessage(c.id),
       photo_url: null,
       timestamp: c.rust_start,
-      player_name: c.current_holder?.display_name || 'Someone',
+      player_name: c.physical_holder_name,
       player_title: '',
       previous_holder_name: null,
       coin_external_id: c.external_id || '',

@@ -53,13 +53,26 @@ export async function GET(request: NextRequest) {
       results.rust = { error: rustErr.message };
     } else if (rustableCoins && rustableCoins.length > 0) {
       const coinIds = rustableCoins.map(c => c.id);
-      const holderPenalties: Record<string, number> = {};
 
-      // Count how many coins are rusting per holder (a player could have multiple)
+      // For each coin, find the PHYSICAL holder — the last player who EARNED it.
+      // current_holder_id may be a stealer who doesn't physically have the coin.
+      const physicalHolderPenalties: Record<string, number> = {};
+
       for (const coin of rustableCoins) {
-        if (coin.current_holder_id) {
-          holderPenalties[coin.current_holder_id] =
-            (holderPenalties[coin.current_holder_id] || 0) + 1;
+        // Find the most recent earned claim for this coin
+        const { data: lastEarnedClaim } = await supabase
+          .from('claims')
+          .select('player_id')
+          .eq('coin_id', coin.id)
+          .eq('mode', 'earned')
+          .order('claimed_at', { ascending: false })
+          .limit(1)
+          .single();
+
+        const penalizeId = lastEarnedClaim?.player_id || null;
+        if (penalizeId) {
+          physicalHolderPenalties[penalizeId] =
+            (physicalHolderPenalties[penalizeId] || 0) + 1;
         }
       }
 
@@ -77,8 +90,8 @@ export async function GET(request: NextRequest) {
         console.error('Rust update error:', updateErr);
         results.rust = { error: updateErr.message };
       } else {
-        // Deduct 1 point per rusted coin from each holder
-        for (const [holderId, count] of Object.entries(holderPenalties)) {
+        // Deduct 1 point per rusted coin from each PHYSICAL holder
+        for (const [holderId, count] of Object.entries(physicalHolderPenalties)) {
           const { data: holder } = await supabase
             .from('players')
             .select('season_score, lifetime_score')
@@ -99,7 +112,7 @@ export async function GET(request: NextRequest) {
         results.rust = {
           coinsRusted: rustableCoins.length,
           coinIds: rustableCoins.map(c => c.external_id),
-          holderspenalized: Object.keys(holderPenalties).length,
+          holderspenalized: Object.keys(physicalHolderPenalties).length,
         };
       }
     } else {
